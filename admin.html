@@ -15,6 +15,8 @@
       --border: rgba(0, 212, 255, 0.18);
       --text: #ffffff;
       --muted: #9bb3c9;
+      --danger: #ff5f7a;
+      --warning: #ffcc66;
     }
 
     * {
@@ -32,30 +34,8 @@
     }
 
     .wrap {
-      max-width: 1300px;
+      max-width: 1350px;
       margin: 0 auto;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .title-box h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2.3rem);
-      margin-bottom: 6px;
-      color: var(--primary);
-      text-shadow: 0 0 18px rgba(0, 212, 255, 0.25);
-    }
-
-    .title-box p {
-      color: var(--muted);
-      font-size: 1rem;
     }
 
     .panel {
@@ -67,47 +47,75 @@
       backdrop-filter: blur(18px);
     }
 
-    .toolbar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
+    .hidden {
+      display: none !important;
     }
 
-    .search {
-      flex: 1;
-      min-width: 260px;
+    .login-box {
+      max-width: 430px;
+      margin: 70px auto 0;
     }
 
-    .search input {
+    .login-box h1,
+    .title-box h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary);
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(0, 212, 255, 0.22);
+    }
+
+    .login-box p,
+    .title-box p,
+    .status {
+      color: var(--muted);
+    }
+
+    .field {
+      margin-top: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 14px;
       border: 1px solid var(--border);
       background: rgba(0, 0, 0, 0.35);
-      color: white;
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
       font-size: 1rem;
       outline: none;
+      font-family: inherit;
     }
 
-    .search input::placeholder {
-      color: #7f97ac;
+    .field textarea {
+      min-height: 80px;
+      resize: vertical;
     }
 
-    .search input:focus {
-      border-color: rgba(0, 212, 255, 0.45);
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
       box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.08);
     }
 
     .btn {
       border: none;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
+      border-radius: 12px;
+      padding: 12px 16px;
       cursor: pointer;
-      transition: 0.25s ease;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
     .btn-primary {
@@ -116,82 +124,160 @@
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
+    .btn-danger {
+      background: rgba(255,95,122,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,95,122,0.25);
     }
 
-    .status {
-      margin: 12px 0 4px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .card .label {
       color: var(--muted);
       font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .card .value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr auto auto;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .table-wrap {
       overflow-x: auto;
       border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255,255,255,0.07);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 980px;
+      min-width: 1200px;
       background: rgba(0, 0, 0, 0.16);
     }
 
-    thead th {
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    th {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 1px;
       color: #9fefff;
-      text-align: left;
-      padding: 14px 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255,255,255,0.02);
     }
 
-    tbody td {
-      padding: 14px 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      vertical-align: middle;
-      font-size: 1rem;
-    }
-
-    tbody tr:hover {
-      background: rgba(255, 255, 255, 0.02);
+    tr:hover {
+      background: rgba(255,255,255,0.02);
     }
 
     .pill {
       display: inline-block;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(0, 255, 133, 0.08);
-      border: 1px solid rgba(0, 255, 133, 0.2);
-      color: var(--secondary);
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      border: 1px solid transparent;
     }
 
-    .whats-btn {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 14px;
-      background: #25d366;
-      color: #031018;
-      font-weight: 800;
-      cursor: pointer;
+    .status-novo {
+      color: var(--primary);
+      background: rgba(0,212,255,0.08);
+      border-color: rgba(0,212,255,0.22);
+    }
+
+    .status-contato {
+      color: var(--warning);
+      background: rgba(255,204,102,0.10);
+      border-color: rgba(255,204,102,0.22);
+    }
+
+    .status-fechado {
+      color: var(--secondary);
+      background: rgba(0,255,133,0.08);
+      border-color: rgba(0,255,133,0.22);
+    }
+
+    .status-perdido {
+      color: var(--danger);
+      background: rgba(255,95,122,0.08);
+      border-color: rgba(255,95,122,0.22);
+    }
+
+    .row-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .row-actions button,
+    .row-actions select {
+      width: 100%;
     }
 
     .empty {
-      padding: 28px 10px;
-      text-align: center;
-      color: var(--muted);
       display: none;
+      text-align: center;
+      padding: 24px 10px;
+      color: var(--muted);
+    }
+
+    .status {
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 700px) {
@@ -199,65 +285,143 @@
         padding: 14px;
       }
 
-      .panel {
-        padding: 16px;
+      .cards {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="header">
-      <div class="title-box">
-        <h1>Painel ViaTec</h1>
-        <p>Leads captados na roleta promocional.</p>
-      </div>
-    </div>
+    <section id="loginSection" class="panel login-box">
+      <h1>Admin ViaTec</h1>
+      <p>Entre para acessar o painel de leads.</p>
 
-    <div class="panel">
-      <div class="toolbar">
-        <div class="search">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Buscar por nome, telefone, cidade ou prêmio"
-          />
+      <div class="field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" placeholder="Seu e-mail de admin">
+      </div>
+
+      <div class="field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" placeholder="Sua senha">
+      </div>
+
+      <div style="margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-primary" id="loginBtn">Entrar</button>
+      </div>
+
+      <div class="status" id="loginStatus"></div>
+    </section>
+
+    <section id="adminSection" class="hidden">
+      <div class="header">
+        <div class="title-box">
+          <h1>Painel ViaTec</h1>
+          <p>Leads captados na roleta promocional.</p>
         </div>
-        <button class="btn btn-primary" onclick="carregarLeads()">Atualizar</button>
+        <div class="header-actions">
+          <button class="btn btn-secondary" id="refreshBtn">Atualizar</button>
+          <button class="btn btn-primary" id="exportBtn">Exportar CSV</button>
+          <button class="btn btn-danger" id="logoutBtn">Sair</button>
+        </div>
       </div>
 
-      <div class="status" id="statusMsg">Carregando leads...</div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>E-mail</th>
-              <th>Telefone</th>
-              <th>Cidade</th>
-              <th>Prêmio</th>
-              <th>Data</th>
-              <th>Ação</th>
-            </tr>
-          </thead>
-          <tbody id="leadsBody"></tbody>
-        </table>
-        <div class="empty" id="emptyMsg">Nenhum lead encontrado.</div>
+      <div class="cards">
+        <div class="card">
+          <div class="label">Total de leads</div>
+          <div class="value" id="cardTotal">0</div>
+        </div>
+        <div class="card">
+          <div class="label">Novos</div>
+          <div class="value" id="cardNovos">0</div>
+        </div>
+        <div class="card">
+          <div class="label">Em contato</div>
+          <div class="value" id="cardContato">0</div>
+        </div>
+        <div class="card">
+          <div class="label">Fechados</div>
+          <div class="value" id="cardFechados">0</div>
+        </div>
       </div>
-    </div>
+
+      <div class="panel">
+        <div class="toolbar">
+          <input type="text" id="searchInput" placeholder="Buscar por nome, telefone, cidade, prêmio ou observação">
+          <select id="statusFilter">
+            <option value="">Todos os status</option>
+            <option value="Novo">Novo</option>
+            <option value="Em contato">Em contato</option>
+            <option value="Fechado">Fechado</option>
+            <option value="Perdido">Perdido</option>
+          </select>
+          <button class="btn btn-secondary" id="clearFiltersBtn">Limpar filtros</button>
+          <button class="btn btn-primary" id="reloadBtn">Recarregar</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Cidade</th>
+                <th>Prêmio</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Observações</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="leadsBody"></tbody>
+          </table>
+          <div class="empty" id="emptyMsg">Nenhum lead encontrado.</div>
+        </div>
+
+        <div class="status" id="statusMsg"></div>
+      </div>
+    </section>
   </div>
 
-  <script>
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
     const SUPABASE_URL = "https://plkvgekbngrznillyupa.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_4g8etYpP50dsAgXZsM8nfg_Mu6roIt0";
 
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const loginSection = document.getElementById("loginSection");
+    const adminSection = document.getElementById("adminSection");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginStatus = document.getElementById("loginStatus");
+
     const leadsBody = document.getElementById("leadsBody");
     const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
     const statusMsg = document.getElementById("statusMsg");
     const emptyMsg = document.getElementById("emptyMsg");
 
+    const cardTotal = document.getElementById("cardTotal");
+    const cardNovos = document.getElementById("cardNovos");
+    const cardContato = document.getElementById("cardContato");
+    const cardFechados = document.getElementById("cardFechados");
+
     let todosLeads = [];
+
+    function mostrarAdmin() {
+      loginSection.classList.add("hidden");
+      adminSection.classList.remove("hidden");
+    }
+
+    function mostrarLogin() {
+      adminSection.classList.add("hidden");
+      loginSection.classList.remove("hidden");
+    }
 
     function formatarData(dataIso) {
       if (!dataIso) return "-";
@@ -277,9 +441,65 @@
 
       const telefoneCompleto = tel.startsWith("55") ? tel : `55${tel}`;
       const mensagem = `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou ${premio} em nossa ação promocional. Vamos dar sequência no seu benefício?`;
-
       const url = `https://wa.me/${telefoneCompleto}?text=${encodeURIComponent(mensagem)}`;
       window.open(url, "_blank");
+    }
+
+    function classeStatus(status) {
+      if (status === "Em contato") return "status-contato";
+      if (status === "Fechado") return "status-fechado";
+      if (status === "Perdido") return "status-perdido";
+      return "status-novo";
+    }
+
+    function atualizarCards(lista) {
+      const total = lista.length;
+      const novos = lista.filter(l => (l.status || "Novo") === "Novo").length;
+      const contato = lista.filter(l => l.status === "Em contato").length;
+      const fechados = lista.filter(l => l.status === "Fechado").length;
+
+      cardTotal.textContent = total;
+      cardNovos.textContent = novos;
+      cardContato.textContent = contato;
+      cardFechados.textContent = fechados;
+    }
+
+    async function atualizarLead(id, patch) {
+      const { error } = await supabase
+        .from("leads")
+        .update(patch)
+        .eq("id", id);
+
+      if (error) throw error;
+    }
+
+    function exportarCSV(lista) {
+      if (!lista.length) {
+        alert("Não há leads para exportar.");
+        return;
+      }
+
+      const headers = ["Nome", "Email", "Telefone", "Cidade", "Premio", "Status", "Observacoes", "Data"];
+      const rows = lista.map(l => [
+        l.nome || "",
+        l.email || "",
+        l.telefone || "",
+        l.cidade || "",
+        l.premio || "",
+        l.status || "Novo",
+        l.observacoes || "",
+        l.created_at || ""
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(";"))
+        .join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "leads-viatec.csv";
+      link.click();
     }
 
     function renderTabela(lista) {
@@ -294,75 +514,176 @@
 
       for (const lead of lista) {
         const tr = document.createElement("tr");
+        const statusAtual = lead.status || "Novo";
+        const obsAtual = lead.observacoes || "";
 
         tr.innerHTML = `
           <td>${lead.nome || "-"}</td>
           <td>${lead.email || "-"}</td>
           <td>${lead.telefone || "-"}</td>
           <td>${lead.cidade || "-"}</td>
-          <td><span class="pill">${lead.premio || "-"}</span></td>
+          <td>${lead.premio || "-"}</td>
           <td>${formatarData(lead.created_at)}</td>
           <td>
-            <button class="whats-btn" onclick='abrirWhatsApp(${JSON.stringify(lead.nome || "")}, ${JSON.stringify(lead.telefone || "")}, ${JSON.stringify(lead.premio || "")})'>
-              WhatsApp
-            </button>
+            <span class="pill ${classeStatus(statusAtual)}">${statusAtual}</span>
+            <div style="margin-top:8px;">
+              <select data-id="${lead.id}" class="statusSelect">
+                <option value="Novo" ${statusAtual === "Novo" ? "selected" : ""}>Novo</option>
+                <option value="Em contato" ${statusAtual === "Em contato" ? "selected" : ""}>Em contato</option>
+                <option value="Fechado" ${statusAtual === "Fechado" ? "selected" : ""}>Fechado</option>
+                <option value="Perdido" ${statusAtual === "Perdido" ? "selected" : ""}>Perdido</option>
+              </select>
+            </div>
+          </td>
+          <td>
+            <textarea data-id="${lead.id}" class="obsInput" placeholder="Anotações...">${obsAtual}</textarea>
+            <div style="margin-top:8px;">
+              <button class="btn btn-secondary saveObsBtn" data-id="${lead.id}">Salvar</button>
+            </div>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="btn btn-primary whatsBtn" data-nome="${encodeURIComponent(lead.nome || "")}" data-tel="${encodeURIComponent(lead.telefone || "")}" data-premio="${encodeURIComponent(lead.premio || "")}">
+                WhatsApp
+              </button>
+            </div>
           </td>
         `;
 
         leadsBody.appendChild(tr);
       }
+
+      document.querySelectorAll(".whatsBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          abrirWhatsApp(
+            decodeURIComponent(btn.dataset.nome),
+            decodeURIComponent(btn.dataset.tel),
+            decodeURIComponent(btn.dataset.premio)
+          );
+        });
+      });
+
+      document.querySelectorAll(".statusSelect").forEach(select => {
+        select.addEventListener("change", async () => {
+          try {
+            statusMsg.textContent = "Atualizando status...";
+            await atualizarLead(select.dataset.id, { status: select.value });
+            await carregarLeads();
+            statusMsg.textContent = "Status atualizado.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao atualizar status.";
+          }
+        });
+      });
+
+      document.querySelectorAll(".saveObsBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const textarea = document.querySelector(`.obsInput[data-id="${id}"]`);
+          try {
+            statusMsg.textContent = "Salvando observação...";
+            await atualizarLead(id, { observacoes: textarea.value });
+            await carregarLeads();
+            statusMsg.textContent = "Observação salva.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao salvar observação.";
+          }
+        });
+      });
     }
 
     function aplicarFiltro() {
       const termo = searchInput.value.trim().toLowerCase();
+      const status = statusFilter.value;
 
-      if (!termo) {
-        renderTabela(todosLeads);
-        return;
+      let lista = [...todosLeads];
+
+      if (termo) {
+        lista = lista.filter((lead) =>
+          (lead.nome || "").toLowerCase().includes(termo) ||
+          (lead.email || "").toLowerCase().includes(termo) ||
+          (lead.telefone || "").toLowerCase().includes(termo) ||
+          (lead.cidade || "").toLowerCase().includes(termo) ||
+          (lead.premio || "").toLowerCase().includes(termo) ||
+          (lead.observacoes || "").toLowerCase().includes(termo)
+        );
       }
 
-      const filtrados = todosLeads.filter((lead) =>
-        (lead.nome || "").toLowerCase().includes(termo) ||
-        (lead.email || "").toLowerCase().includes(termo) ||
-        (lead.telefone || "").toLowerCase().includes(termo) ||
-        (lead.cidade || "").toLowerCase().includes(termo) ||
-        (lead.premio || "").toLowerCase().includes(termo)
-      );
+      if (status) {
+        lista = lista.filter((lead) => (lead.status || "Novo") === status);
+      }
 
-      renderTabela(filtrados);
+      renderTabela(lista);
+      atualizarCards(lista);
     }
 
     async function carregarLeads() {
       statusMsg.textContent = "Carregando leads...";
 
-      try {
-        const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc`,
-          {
-            headers: {
-              "apikey": SUPABASE_ANON_KEY,
-              "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-            }
-          }
-        );
+      const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-        if (!response.ok) {
-          const erro = await response.text();
-          throw new Error(erro || "Erro ao buscar leads.");
-        }
-
-        todosLeads = await response.json();
-        renderTabela(todosLeads);
-        statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
-      } catch (error) {
+      if (error) {
         console.error(error);
         statusMsg.textContent = "Erro ao carregar leads.";
+        return;
       }
+
+      todosLeads = data || [];
+      aplicarFiltro();
+      statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
     }
 
-    searchInput.addEventListener("input", aplicarFiltro);
+    async function login() {
+      loginStatus.textContent = "Entrando...";
 
-    carregarLeads();
+      const { error } = await supabase.auth.signInWithPassword({
+        email: loginEmail.value.trim(),
+        password: loginPassword.value
+      });
+
+      if (error) {
+        loginStatus.textContent = "E-mail ou senha inválidos.";
+        return;
+      }
+
+      loginStatus.textContent = "";
+      mostrarAdmin();
+      await carregarLeads();
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      mostrarLogin();
+      loginPassword.value = "";
+      statusMsg.textContent = "";
+    }
+
+    loginBtn.addEventListener("click", login);
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+    document.getElementById("refreshBtn").addEventListener("click", carregarLeads);
+    document.getElementById("reloadBtn").addEventListener("click", carregarLeads);
+    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(todosLeads));
+    document.getElementById("clearFiltersBtn").addEventListener("click", () => {
+      searchInput.value = "";
+      statusFilter.value = "";
+      aplicarFiltro();
+    });
+
+    searchInput.addEventListener("input", aplicarFiltro);
+    statusFilter.addEventListener("change", aplicarFiltro);
+
+    const { data: authData } = await supabase.auth.getSession();
+    if (authData.session) {
+      mostrarAdmin();
+      await carregarLeads();
+    } else {
+      mostrarLogin();
+    }
   </script>
 </body>
 </html>
