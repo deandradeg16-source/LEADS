@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel ViaTec</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #00d4ff;
+      --secondary: #00ff85;
+      --dark-core: #010306;
+      --panel-bg: rgba(10, 15, 25, 0.92);
+      --border: rgba(0, 212, 255, 0.18);
+      --text: #ffffff;
+      --muted: #9bb3c9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at center, #0a172e 0%, #010306 100%);
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .title-box h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      margin-bottom: 6px;
+      color: var(--primary);
+      text-shadow: 0 0 18px rgba(0, 212, 255, 0.25);
+    }
+
+    .title-box p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .panel {
+      background: var(--panel-bg);
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      padding: 22px;
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(18px);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.35);
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search input::placeholder {
+      color: #7f97ac;
+    }
+
+    .search input:focus {
+      border-color: rgba(0, 212, 255, 0.45);
+      box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.08);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #031018;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .status {
+      margin: 12px 0 4px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    thead th {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #9fefff;
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    tbody td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: middle;
+      font-size: 1rem;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0, 255, 133, 0.08);
+      border: 1px solid rgba(0, 255, 133, 0.2);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .whats-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #25d366;
+      color: #031018;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .empty {
+      padding: 28px 10px;
+      text-align: center;
+      color: var(--muted);
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 14px;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="title-box">
+        <h1>Painel ViaTec</h1>
+        <p>Leads captados na roleta promocional.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="toolbar">
+        <div class="search">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar por nome, telefone, cidade ou prêmio"
+          />
+        </div>
+        <button class="btn btn-primary" onclick="carregarLeads()">Atualizar</button>
+      </div>
+
+      <div class="status" id="statusMsg">Carregando leads...</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Telefone</th>
+              <th>Cidade</th>
+              <th>Prêmio</th>
+              <th>Data</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="leadsBody"></tbody>
+        </table>
+        <div class="empty" id="emptyMsg">Nenhum lead encontrado.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://plkvgekbngrznillyupa.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_4g8etYpP50dsAgXZsM8nfg_Mu6roIt0";
+
+    const leadsBody = document.getElementById("leadsBody");
+    const searchInput = document.getElementById("searchInput");
+    const statusMsg = document.getElementById("statusMsg");
+    const emptyMsg = document.getElementById("emptyMsg");
+
+    let todosLeads = [];
+
+    function formatarData(dataIso) {
+      if (!dataIso) return "-";
+      return new Date(dataIso).toLocaleString("pt-BR");
+    }
+
+    function normalizarTelefone(telefone) {
+      return (telefone || "").replace(/\D/g, "");
+    }
+
+    function abrirWhatsApp(nome, telefone, premio) {
+      const tel = normalizarTelefone(telefone);
+      if (!tel) {
+        alert("Telefone inválido.");
+        return;
+      }
+
+      const telefoneCompleto = tel.startsWith("55") ? tel : `55${tel}`;
+      const mensagem = `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou ${premio} em nossa ação promocional. Vamos dar sequência no seu benefício?`;
+
+      const url = `https://wa.me/${telefoneCompleto}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, "_blank");
+    }
+
+    function renderTabela(lista) {
+      leadsBody.innerHTML = "";
+
+      if (!lista.length) {
+        emptyMsg.style.display = "block";
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+
+      for (const lead of lista) {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${lead.nome || "-"}</td>
+          <td>${lead.email || "-"}</td>
+          <td>${lead.telefone || "-"}</td>
+          <td>${lead.cidade || "-"}</td>
+          <td><span class="pill">${lead.premio || "-"}</span></td>
+          <td>${formatarData(lead.created_at)}</td>
+          <td>
+            <button class="whats-btn" onclick='abrirWhatsApp(${JSON.stringify(lead.nome || "")}, ${JSON.stringify(lead.telefone || "")}, ${JSON.stringify(lead.premio || "")})'>
+              WhatsApp
+            </button>
+          </td>
+        `;
+
+        leadsBody.appendChild(tr);
+      }
+    }
+
+    function aplicarFiltro() {
+      const termo = searchInput.value.trim().toLowerCase();
+
+      if (!termo) {
+        renderTabela(todosLeads);
+        return;
+      }
+
+      const filtrados = todosLeads.filter((lead) =>
+        (lead.nome || "").toLowerCase().includes(termo) ||
+        (lead.email || "").toLowerCase().includes(termo) ||
+        (lead.telefone || "").toLowerCase().includes(termo) ||
+        (lead.cidade || "").toLowerCase().includes(termo) ||
+        (lead.premio || "").toLowerCase().includes(termo)
+      );
+
+      renderTabela(filtrados);
+    }
+
+    async function carregarLeads() {
+      statusMsg.textContent = "Carregando leads...";
+
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc`,
+          {
+            headers: {
+              "apikey": SUPABASE_ANON_KEY,
+              "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+
+        if (!response.ok) {
+          const erro = await response.text();
+          throw new Error(erro || "Erro ao buscar leads.");
+        }
+
+        todosLeads = await response.json();
+        renderTabela(todosLeads);
+        statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
+      } catch (error) {
+        console.error(error);
+        statusMsg.textContent = "Erro ao carregar leads.";
+      }
+    }
+
+    searchInput.addEventListener("input", aplicarFiltro);
+
+    carregarLeads();
+  </script>
+</body>
+</html>
