@@ -5,18 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Painel ViaTec</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Inter:wght@400;500;600;700&display=swap');
 
     :root {
-      --primary: #00d4ff;
-      --secondary: #00ff85;
-      --dark-core: #010306;
-      --panel-bg: rgba(10, 15, 25, 0.92);
-      --border: rgba(0, 212, 255, 0.18);
-      --text: #ffffff;
-      --muted: #9bb3c9;
-      --danger: #ff5f7a;
-      --warning: #ffcc66;
+      --bg: #f4f8fc;
+      --panel: #ffffff;
+      --panel-2: #f8fbff;
+      --text: #102033;
+      --muted: #64748b;
+      --border: #d9e5f2;
+      --primary: #0ea5e9;
+      --primary-dark: #0b79b0;
+      --green: #10b981;
+      --green-soft: #dcfce7;
+      --blue-soft: #e0f2fe;
+      --yellow: #f59e0b;
+      --yellow-soft: #fef3c7;
+      --red: #ef4444;
+      --red-soft: #fee2e2;
+      --shadow: 0 18px 45px rgba(16, 32, 51, 0.08);
+      --radius: 20px;
     }
 
     * {
@@ -26,58 +34,60 @@
     }
 
     body {
-      min-height: 100vh;
-      font-family: 'Rajdhani', sans-serif;
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(14,165,233,0.08), transparent 18%),
+        radial-gradient(circle at bottom left, rgba(16,185,129,0.08), transparent 18%),
+        var(--bg);
       color: var(--text);
-      background: radial-gradient(circle at center, #0a172e 0%, #010306 100%);
+      min-height: 100vh;
       padding: 24px;
     }
 
     .wrap {
-      max-width: 1350px;
+      max-width: 1380px;
       margin: 0 auto;
-    }
-
-    .panel {
-      background: var(--panel-bg);
-      border-radius: 28px;
-      border: 1px solid var(--border);
-      padding: 22px;
-      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(18px);
     }
 
     .hidden {
       display: none !important;
     }
 
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
     .login-box {
       max-width: 430px;
-      margin: 70px auto 0;
+      margin: 60px auto 0;
+      padding: 28px;
     }
 
-    .login-box h1,
-    .title-box h1 {
+    .logo {
       font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
       color: var(--primary);
-      margin-bottom: 10px;
-      text-shadow: 0 0 18px rgba(0, 212, 255, 0.22);
+      margin-bottom: 8px;
     }
 
-    .login-box p,
-    .title-box p,
-    .status {
+    .subtitle {
       color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
     }
 
     .field {
-      margin-top: 14px;
+      margin-bottom: 14px;
     }
 
     .field label {
       display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
       margin-bottom: 8px;
-      font-weight: 700;
     }
 
     .field input,
@@ -85,33 +95,36 @@
     .field textarea {
       width: 100%;
       border: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.35);
-      color: #fff;
-      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      border-radius: 14px;
       padding: 12px 14px;
-      font-size: 1rem;
+      font-size: 0.96rem;
       outline: none;
+      transition: 0.2s ease;
       font-family: inherit;
     }
 
     .field textarea {
-      min-height: 80px;
+      min-height: 72px;
       resize: vertical;
     }
 
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
-      box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.08);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.10);
     }
 
     .btn {
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px 16px;
-      cursor: pointer;
       font-weight: 700;
+      cursor: pointer;
       transition: 0.2s ease;
+      font-family: inherit;
     }
 
     .btn:hover {
@@ -119,20 +132,25 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #031018;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #16a34a, var(--green));
+      color: white;
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #f8fafc;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .btn-danger {
-      background: rgba(255,95,122,0.12);
-      color: #fff;
-      border: 1px solid rgba(255,95,122,0.25);
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid #fecdd3;
     }
 
     .header {
@@ -144,108 +162,138 @@
       margin-bottom: 18px;
     }
 
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #0f3c68;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: var(--muted);
+    }
+
     .header-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
 
-    .cards {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
       gap: 14px;
       margin-bottom: 18px;
     }
 
-    .card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 18px;
-      padding: 16px;
+    .stat {
+      padding: 18px;
     }
 
-    .card .label {
+    .stat .label {
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 6px;
+      font-size: 0.94rem;
+      margin-bottom: 8px;
     }
 
-    .card .value {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      color: var(--primary);
+    .stat .value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0f3c68;
+    }
+
+    .panel {
+      padding: 18px;
     }
 
     .toolbar {
       display: grid;
-      grid-template-columns: 1.4fr 0.8fr auto auto;
+      grid-template-columns: 1.3fr 0.8fr auto auto;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .table-wrap {
       overflow-x: auto;
+      border: 1px solid var(--border);
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.07);
+      background: var(--panel-2);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1200px;
-      background: rgba(0, 0, 0, 0.16);
+      min-width: 1220px;
+      background: white;
     }
 
     th, td {
       padding: 14px 12px;
       text-align: left;
       vertical-align: top;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid #edf2f7;
+      font-size: 0.95rem;
     }
 
     th {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 1px;
-      color: #9fefff;
-      background: rgba(255,255,255,0.02);
+      background: #f8fbff;
+      color: #33526f;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
-    tr:hover {
-      background: rgba(255,255,255,0.02);
+    tbody tr:hover {
+      background: #fbfdff;
+    }
+
+    .lead-name {
+      font-weight: 700;
+      color: #0f2942;
+    }
+
+    .lead-sub {
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 4px;
     }
 
     .pill {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       padding: 7px 12px;
       border-radius: 999px;
+      font-size: 0.83rem;
       font-weight: 700;
-      font-size: 0.88rem;
       border: 1px solid transparent;
+      margin-bottom: 8px;
     }
 
     .status-novo {
-      color: var(--primary);
-      background: rgba(0,212,255,0.08);
-      border-color: rgba(0,212,255,0.22);
+      background: var(--blue-soft);
+      color: #0369a1;
+      border-color: #bae6fd;
     }
 
     .status-contato {
-      color: var(--warning);
-      background: rgba(255,204,102,0.10);
-      border-color: rgba(255,204,102,0.22);
+      background: var(--yellow-soft);
+      color: #b45309;
+      border-color: #fde68a;
     }
 
     .status-fechado {
-      color: var(--secondary);
-      background: rgba(0,255,133,0.08);
-      border-color: rgba(0,255,133,0.22);
+      background: var(--green-soft);
+      color: #047857;
+      border-color: #bbf7d0;
     }
 
     .status-perdido {
-      color: var(--danger);
-      background: rgba(255,95,122,0.08);
-      border-color: rgba(255,95,122,0.22);
+      background: var(--red-soft);
+      color: #b91c1c;
+      border-color: #fecaca;
     }
 
     .row-actions {
@@ -259,20 +307,44 @@
       width: 100%;
     }
 
-    .empty {
-      display: none;
-      text-align: center;
-      padding: 24px 10px;
-      color: var(--muted);
+    .obs-box {
+      display: grid;
+      gap: 8px;
     }
 
-    .status {
+    .obs-box textarea {
+      min-height: 64px;
+      background: #fff;
+    }
+
+    .status-line {
+      display: grid;
+      gap: 8px;
+    }
+
+    .empty {
+      display: none;
+      padding: 28px 12px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+    }
+
+    .status-msg {
       margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .login-status {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
     @media (max-width: 1100px) {
-      .cards {
-        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      .stats {
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
       }
 
       .toolbar {
@@ -285,17 +357,21 @@
         padding: 14px;
       }
 
-      .cards {
+      .stats {
         grid-template-columns: 1fr;
+      }
+
+      .login-box {
+        margin-top: 20px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <section id="loginSection" class="panel login-box">
-      <h1>Admin ViaTec</h1>
-      <p>Entre para acessar o painel de leads.</p>
+    <section id="loginSection" class="card login-box">
+      <div class="logo">Painel ViaTec</div>
+      <div class="subtitle">Entre com seu usuário administrador para acessar os leads.</div>
 
       <div class="field">
         <label for="loginEmail">E-mail</label>
@@ -307,46 +383,44 @@
         <input type="password" id="loginPassword" placeholder="Sua senha">
       </div>
 
-      <div style="margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn-primary" id="loginBtn">Entrar</button>
-      </div>
-
-      <div class="status" id="loginStatus"></div>
+      <button class="btn btn-primary" id="loginBtn">Entrar</button>
+      <div class="login-status" id="loginStatus"></div>
     </section>
 
     <section id="adminSection" class="hidden">
       <div class="header">
-        <div class="title-box">
+        <div>
           <h1>Painel ViaTec</h1>
           <p>Leads captados na roleta promocional.</p>
         </div>
+
         <div class="header-actions">
           <button class="btn btn-secondary" id="refreshBtn">Atualizar</button>
-          <button class="btn btn-primary" id="exportBtn">Exportar CSV</button>
+          <button class="btn btn-green" id="exportBtn">Exportar CSV</button>
           <button class="btn btn-danger" id="logoutBtn">Sair</button>
         </div>
       </div>
 
-      <div class="cards">
-        <div class="card">
+      <div class="stats">
+        <div class="card stat">
           <div class="label">Total de leads</div>
           <div class="value" id="cardTotal">0</div>
         </div>
-        <div class="card">
+        <div class="card stat">
           <div class="label">Novos</div>
           <div class="value" id="cardNovos">0</div>
         </div>
-        <div class="card">
+        <div class="card stat">
           <div class="label">Em contato</div>
           <div class="value" id="cardContato">0</div>
         </div>
-        <div class="card">
+        <div class="card stat">
           <div class="label">Fechados</div>
           <div class="value" id="cardFechados">0</div>
         </div>
       </div>
 
-      <div class="panel">
+      <div class="card panel">
         <div class="toolbar">
           <input type="text" id="searchInput" placeholder="Buscar por nome, telefone, cidade, prêmio ou observação">
           <select id="statusFilter">
@@ -364,8 +438,7 @@
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
+                <th>Lead</th>
                 <th>Telefone</th>
                 <th>Cidade</th>
                 <th>Prêmio</th>
@@ -380,7 +453,7 @@
           <div class="empty" id="emptyMsg">Nenhum lead encontrado.</div>
         </div>
 
-        <div class="status" id="statusMsg"></div>
+        <div class="status-msg" id="statusMsg"></div>
       </div>
     </section>
   </div>
@@ -432,6 +505,18 @@
       return (telefone || "").replace(/\D/g, "");
     }
 
+    function gerarMensagem(nome, premio) {
+      if ((premio || "").includes("INSTALAÇÃO")) {
+        return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou instalação grátis na nossa ação promocional. Vamos ativar seu benefício?`;
+      }
+
+      if ((premio || "").includes("DESCONTO")) {
+        return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou um desconto especial na nossa ação promocional. Quer aproveitar esse benefício?`;
+      }
+
+      return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou ${premio} na nossa ação promocional. Vamos dar sequência no seu benefício?`;
+    }
+
     function abrirWhatsApp(nome, telefone, premio) {
       const tel = normalizarTelefone(telefone);
       if (!tel) {
@@ -440,7 +525,7 @@
       }
 
       const telefoneCompleto = tel.startsWith("55") ? tel : `55${tel}`;
-      const mensagem = `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou ${premio} em nossa ação promocional. Vamos dar sequência no seu benefício?`;
+      const mensagem = gerarMensagem(nome, premio);
       const url = `https://wa.me/${telefoneCompleto}?text=${encodeURIComponent(mensagem)}`;
       window.open(url, "_blank");
     }
@@ -518,15 +603,17 @@
         const obsAtual = lead.observacoes || "";
 
         tr.innerHTML = `
-          <td>${lead.nome || "-"}</td>
-          <td>${lead.email || "-"}</td>
+          <td>
+            <div class="lead-name">${lead.nome || "-"}</div>
+            <div class="lead-sub">${lead.email || "-"}</div>
+          </td>
           <td>${lead.telefone || "-"}</td>
           <td>${lead.cidade || "-"}</td>
           <td>${lead.premio || "-"}</td>
           <td>${formatarData(lead.created_at)}</td>
           <td>
-            <span class="pill ${classeStatus(statusAtual)}">${statusAtual}</span>
-            <div style="margin-top:8px;">
+            <div class="status-line">
+              <span class="pill ${classeStatus(statusAtual)}">${statusAtual}</span>
               <select data-id="${lead.id}" class="statusSelect">
                 <option value="Novo" ${statusAtual === "Novo" ? "selected" : ""}>Novo</option>
                 <option value="Em contato" ${statusAtual === "Em contato" ? "selected" : ""}>Em contato</option>
@@ -536,14 +623,14 @@
             </div>
           </td>
           <td>
-            <textarea data-id="${lead.id}" class="obsInput" placeholder="Anotações...">${obsAtual}</textarea>
-            <div style="margin-top:8px;">
+            <div class="obs-box">
+              <textarea data-id="${lead.id}" class="obsInput" placeholder="Anotações...">${obsAtual}</textarea>
               <button class="btn btn-secondary saveObsBtn" data-id="${lead.id}">Salvar</button>
             </div>
           </td>
           <td>
             <div class="row-actions">
-              <button class="btn btn-primary whatsBtn" data-nome="${encodeURIComponent(lead.nome || "")}" data-tel="${encodeURIComponent(lead.telefone || "")}" data-premio="${encodeURIComponent(lead.premio || "")}">
+              <button class="btn btn-green whatsBtn" data-id="${lead.id}" data-nome="${encodeURIComponent(lead.nome || "")}" data-tel="${encodeURIComponent(lead.telefone || "")}" data-premio="${encodeURIComponent(lead.premio || "")}">
                 WhatsApp
               </button>
             </div>
@@ -554,12 +641,22 @@
       }
 
       document.querySelectorAll(".whatsBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          abrirWhatsApp(
-            decodeURIComponent(btn.dataset.nome),
-            decodeURIComponent(btn.dataset.tel),
-            decodeURIComponent(btn.dataset.premio)
-          );
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const nome = decodeURIComponent(btn.dataset.nome);
+          const tel = decodeURIComponent(btn.dataset.tel);
+          const premio = decodeURIComponent(btn.dataset.premio);
+
+          abrirWhatsApp(nome, tel, premio);
+
+          try {
+            await atualizarLead(id, { status: "Em contato" });
+            await carregarLeads();
+            statusMsg.textContent = "Lead marcado como Em contato.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao atualizar status do lead.";
+          }
         });
       });
 
@@ -581,6 +678,7 @@
         btn.addEventListener("click", async () => {
           const id = btn.dataset.id;
           const textarea = document.querySelector(`.obsInput[data-id="${id}"]`);
+
           try {
             statusMsg.textContent = "Salvando observação...";
             await atualizarLead(id, { observacoes: textarea.value });
