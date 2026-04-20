@@ -251,6 +251,8 @@
         { t: "UPGRADE", s: "DOBRO MEGA", i: "🚀" },
         { t: "ROTEADOR", s: "GIGA", i: "📶" },
         { t: "BRINDE", s: "PREMIUM", i: "🛍️" }
+        { t: "NÃO FOI DESSA", s: "VEZES", i: "❌" },
+
     ];
 
     const canvas = document.getElementById('canvas');
@@ -349,7 +351,7 @@
             const win = prizes[winIdx];
 
             document.getElementById('result-display').innerHTML = 
-                `🎉 VOCÊ GANHOU:<br>${win.t} ${win.s}`;
+                `🎉 PARABÉNS VOCÊ GANHOU:<br>${win.t} ${win.s}`;
             btn.innerText = "PRÊMIO DETECTADO";
         }, 9000); // 9 segundos de suspense
     }
