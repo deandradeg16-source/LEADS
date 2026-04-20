@@ -286,6 +286,13 @@
             justify-content: center;
         }
 
+        .status-msg {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.8;
+            min-height: 20px;
+        }
+
         @media (max-width: 550px) {
             :root { --wheel-size: 320px; }
 
@@ -368,15 +375,28 @@
 
         <button class="btn btn-spin" id="spinBtn" onclick="executeSpin()">GIRAR</button>
         <div id="result-display"></div>
+        <div id="status-msg" class="status-msg"></div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <script>
+    const SUPABASE_URL = "https://plkvgekbngrznillyupa.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_4g8etYpP50dsAgXZsM8nfg_Mu6roIt0";
+
     const telInput = document.getElementById('userTel');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultDisplay = document.getElementById('result-display');
+    const statusMsg = document.getElementById('status-msg');
+
+    let currentRotation = 0;
+    let wheelDrawn = false;
+
     telInput.addEventListener('input', (e) => {
-        let x = e.target.value.replace(/\\D/g, '').match(/(\\d{0,2})(\\d{0,5})(\\d{0,4})/);
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
     });
 
@@ -389,14 +409,6 @@
         { t: "WIFI", s: "TURBINADO", i: "⚡" },
         { t: "COMBO", s: "EXCLUSIVO", i: "📺" }
     ];
-
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const spinBtn = document.getElementById('spinBtn');
-    const resultDisplay = document.getElementById('result-display');
-
-    let currentRotation = 0;
-    let wheelDrawn = false;
 
     function drawWheel() {
         const sections = prizes.length;
@@ -447,6 +459,24 @@
         wheelDrawn = true;
     }
 
+    async function salvarLeadNoSupabase(lead) {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_ANON_KEY,
+                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                "Prefer": "return=minimal"
+            },
+            body: JSON.stringify(lead)
+        });
+
+        if (!response.ok) {
+            const erro = await response.text();
+            throw new Error(erro || "Erro ao salvar lead");
+        }
+    }
+
     function showLeadForm() {
         document.getElementById('intro-screen').style.display = 'none';
         document.getElementById('lead-form').style.display = 'flex';
@@ -465,6 +495,7 @@
 
         document.getElementById('lead-form').style.display = 'none';
         document.getElementById('wheel-game').style.display = 'flex';
+        statusMsg.textContent = "";
 
         if (!wheelDrawn) {
             drawWheel();
@@ -528,6 +559,7 @@
 
     function voltarInicio() {
         resultDisplay.innerHTML = "";
+        statusMsg.textContent = "";
 
         spinBtn.innerText = "GIRAR";
         spinBtn.disabled = false;
@@ -540,7 +572,6 @@
             canvas.style.transition = "transform 9s cubic-bezier(0.15, 0, 0, 1)";
         }, 50);
 
-        // limpa os campos do formulário
         document.getElementById('userName').value = "";
         document.getElementById('userEmail').value = "";
         document.getElementById('userTel').value = "";
@@ -551,11 +582,12 @@
         document.getElementById('intro-screen').style.display = "flex";
     }
 
-    function executeSpin() {
+    async function executeSpin() {
         if (spinBtn.disabled) return;
 
         spinBtn.disabled = true;
         spinBtn.innerText = "ROTACIONANDO...";
+        statusMsg.textContent = "";
 
         const rotations = 360 * 12;
         const randomAngle = Math.floor(Math.random() * 360);
@@ -563,7 +595,7 @@
 
         canvas.style.transform = `rotate(${totalRotation}deg)`;
 
-        setTimeout(() => {
+        setTimeout(async () => {
             const finalAngle = totalRotation % 360;
             const winIdx = Math.floor(((360 - finalAngle + 270) % 360) / (360 / prizes.length)) % prizes.length;
             const win = prizes[winIdx];
@@ -571,12 +603,29 @@
             resultDisplay.innerHTML = `🎉 PARABÉNS VOCÊ GANHOU:<br>${win.t} ${win.s}`;
             soltarFogos();
 
+            const lead = {
+                nome: document.getElementById('userName').value.trim(),
+                email: document.getElementById('userEmail').value.trim(),
+                telefone: document.getElementById('userTel').value.trim(),
+                cidade: document.getElementById('userCity').value.trim(),
+                premio: `${win.t} ${win.s}`
+            };
+
+            try {
+                await salvarLeadNoSupabase(lead);
+                statusMsg.textContent = "Lead salvo com sucesso.";
+            } catch (e) {
+                console.error("Erro ao salvar lead:", e);
+                statusMsg.textContent = "Erro ao salvar lead.";
+            }
+
             spinBtn.innerText = "PRÊMIO DETECTADO";
             currentRotation = totalRotation % 360;
 
             setTimeout(() => {
                 voltarInicio();
-            }, 10000);
+            }, 5000);
+
         }, 9000);
     }
 </script>
