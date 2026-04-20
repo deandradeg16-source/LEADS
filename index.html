@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViaTec | Conexão Premiada</title>
+    <title>ViaTec | Cyber Wheel 3D</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Rajdhani:wght@600;700&display=swap');
 
         :root {
-            --primary: #0082ff;
-            --secondary: #00ff85;
+            /* Cores ViaTec Tech */
+            --primary: #00d4ff; /* Azul Cyan */
+            --secondary: #00ff85; /* Verde Neon */
             --dark-core: #010306;
             --panel-bg: rgba(10, 15, 25, 0.9);
-            --border: rgba(255, 255, 255, 0.05);
+            --border: rgba(0, 212, 255, 0.2);
+            /* Tamanho imponente da roleta */
             --wheel-size: 500px;
         }
 
@@ -28,180 +30,330 @@
         }
 
         .container {
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             width: 100%; max-width: 650px; padding: 20px;
+            perspective: 1500px; /* Perspectiva 3D */
         }
 
-        /* --- LOGO FIXO NO TOPO --- */
-        .brand-header {
-            display: flex; flex-direction: column; align-items: center;
-            margin-bottom: 25px; text-align: center;
-        }
-
-        .logo-viatec {
-            font-family: 'Montserrat', sans-serif; font-size: 42px; font-weight: 900;
-            letter-spacing: -2px; margin: 0; line-height: 1;
+        /* --- LOGO VIATEC CYBER --- */
+        .logo {
+            font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 5vw, 36px); letter-spacing: -1px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 12px rgba(0, 130, 255, 0.4));
+            text-align: center; margin-bottom: 30px;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
         }
 
-        .logo-sub {
-            font-size: 11px; letter-spacing: 5px; color: var(--primary);
-            text-transform: uppercase; margin-top: 5px; font-weight: 700;
-        }
-
-        /* --- PAINÉIS --- */
+        /* --- ESTILO PADRÃO DOS PAINÉIS DE VIDRO --- */
         .panel {
             background: var(--panel-bg);
-            backdrop-filter: blur(25px);
-            border-radius: 40px; border: 1px solid var(--border);
-            padding: 40px; text-align: center; width: 100%;
+            backdrop-filter: blur(30px);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            padding: 40px;
+            text-align: center;
+            width: 100%;
             box-shadow: 0 40px 80px rgba(0,0,0,0.8);
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* --- TELAS --- */
-        #lead-form, #wheel-game { display: none; }
+        .panel-desc { opacity: 0.7; margin-bottom: 35px; font-size: 16px; letter-spacing: 1px; }
 
-        .promo-text { font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 8vw, 50px); text-transform: uppercase; margin-bottom: 5px; line-height: 0.85; }
-        .promo-text span { color: var(--secondary); text-shadow: 0 0 20px rgba(0, 255, 133, 0.4); }
-        .reward-badge { background: white; color: #010306; font-family: 'Montserrat', sans-serif; padding: 10px 20px; border-radius: 6px; font-size: 19px; margin-top: 20px; text-transform: uppercase; font-weight: 900; }
+        /* --- TELA 1: INTRODUÇÃO --- */
+        #intro-screen { }
+        .promo-text { font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 7vw, 48px); text-transform: uppercase; margin-bottom: 5px; line-height: 0.85; }
+        .promo-text span { color: var(--secondary); text-shadow: 0 0 20px rgba(0, 255, 133, 0.5); }
+        .reward-badge { background: white; color: #010306; font-family: 'Montserrat', sans-serif; padding: 8px 18px; border-radius: 6px; font-size: 20px; margin-top: 15px; text-transform: uppercase; }
 
-        /* --- FORMULÁRIO --- */
-        .input-group { width: 100%; position: relative; margin-bottom: 12px; }
+        /* --- TELA 2: CADASTRO CYBER --- */
+        #lead-form { display: none; }
+        .input-group { width: 100%; position: relative; margin-bottom: 14px; }
         .input-group input {
-            width: 100%; padding: 16px 16px 16px 45px;
-            background: rgba(0,0,0,0.4); border: 1px solid var(--border);
-            border-radius: 12px; color: white; font-size: 16px; transition: 0.3s;
+            width: 100%; padding: 18px 18px 18px 50px;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+            border-radius: 14px; color: white; font-size: 17px; transition: 0.3s;
         }
-        .input-group input:focus { border-color: var(--primary); outline: none; background: rgba(0, 212, 255, 0.05); }
-        .input-group svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
+        .input-group input:focus { border-color: var(--primary); outline: none; background: rgba(0, 212, 255, 0.08); box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
+        .input-group svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
 
-        /* --- ROLETA --- */
+        .input-row { display: flex; gap: 14px; width: 100%; }
+
+        /* --- TELA 3: ROLETA CYBER-HARDWARE (CORRIGIDA) --- */
+        #wheel-game { display: none; flex-direction: column; align-items: center; width: 100%; }
+
         .wheel-stage {
-            position: relative; width: var(--wheel-size); height: var(--wheel-size);
-            transform: rotateX(20deg); margin-bottom: 40px;
+            position: relative;
+            width: var(--wheel-size);
+            height: var(--wheel-size);
+            transform: rotateX(22deg); /* Inclinação 3D */
+            margin: 0 auto 50px;
         }
+
+        /* Camada 1: Sombra de Chão (Base) */
+        .wheel-stage::after {
+            content: ''; position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
+            width: 85%; height: 60px; background: rgba(0,0,0,0.8); filter: blur(30px); border-radius: 50%; z-index: -2;
+        }
+
+        /* Camada 2: A Borda Estática (Não Gira) */
         .static-rim {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 50%; border: 18px solid #0f1a30; z-index: -1;
-            box-shadow: 0 15px 0 #050810, 0 30px 50px rgba(0,0,0,0.8);
+            border-radius: 50%;
+            border: 18px solid #0f1a30; /* Borda grossa e estática */
+            box-shadow: 
+                0 20px 0 #050810, /* Espessura lateral 3D */
+                0 30px 60px rgba(0,0,0,0.8),
+                0 0 40px rgba(0, 212, 255, 0.15); /* Glow Tech Sutil */
+            z-index: -1;
         }
-        #canvas { width: calc(100% - 36px); height: calc(100% - 36px); margin: 18px; border-radius: 50%; transition: transform 9s cubic-bezier(0.15, 0, 0, 1); }
-        .pointer { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); z-index: 100; filter: drop-shadow(0 0 10px var(--secondary)); }
 
-        /* --- BOTÕES --- */
+        /* Camada 3: O Disco que Gira (Sem Borda visível) */
+        #canvas {
+            width: calc(100% - 36px); /* Descontando as bordas estáticas (18px + 18px) */
+            height: calc(100% - 36px);
+            margin: 18px; /* Centralizado dentro da borda estática */
+            border-radius: 50%;
+            background: #070b14;
+            transition: transform 9s cubic-bezier(0.15, 0, 0, 1); /* Parada suave */
+            /* Removemos a borda grossa daqui para evitar oscilação visual */
+            border: 2px solid rgba(255,255,255,0.03); 
+        }
+
+        /* Ponteiro Laser Estático */
+        .pointer-scanner {
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%); z-index: 100;
+            filter: drop-shadow(0 0 15px var(--secondary));
+        }
+
+        /* Núcleo Central Estático */
+        .cyber-hub {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90px; height: 90px; background: radial-gradient(circle, #1a2c4e, #05070a);
+            border: 4px solid var(--primary); border-radius: 50%; z-index: 50;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.9);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- BOTÕES E RESULTADO --- */
         .btn {
-            padding: 20px 50px; font-family: 'Montserrat', sans-serif; font-weight: 900;
-            text-transform: uppercase; cursor: pointer; border: none; border-radius: 50px;
-            width: 100%; font-size: 18px; transition: 0.3s;
+            padding: 22px 60px; font-family: 'Orbitron', sans-serif; font-weight: bold; text-transform: uppercase;
+            cursor: pointer; border: none; border-radius: 50px; transition: all 0.4s ease;
+            width: 100%; font-size: 19px; letter-spacing: 3px;
         }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), #0057ff); color: white; box-shadow: 0 10px 30px rgba(0, 130, 255, 0.4); margin-top: 30px; }
-        .btn-spin { background: var(--secondary); color: #010306; max-width: 300px; box-shadow: 0 10px 30px rgba(0, 255, 133, 0.3); }
-        .btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
-        #result { margin-top: 25px; font-size: 28px; color: var(--secondary); text-align: center; font-weight: 700; text-transform: uppercase; }
+        /* Botão Azul Tech */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #005ce6 100%);
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 130, 255, 0.4);
+        }
 
-        @media (max-width: 550px) { :root { --wheel-size: 320px; } }
+        /* Botão Verde Neon */
+        .btn-spin {
+            background: var(--secondary);
+            color: #010306;
+            box-shadow: 0 15px 40px rgba(0, 255, 133, 0.3);
+            max-width: 320px; margin-top: 50px;
+        }
+
+        .btn:hover { transform: translateY(-4px); filter: brightness(1.15); box-shadow: 0 20px 50px rgba(0, 130, 255, 0.5); }
+        .btn:active { transform: translateY(2px); }
+        .btn:disabled { opacity: 0.2; cursor: not-allowed; animation: none; }
+
+        #result-display {
+            margin-top: 35px; font-size: clamp(22px, 4.5vw, 36px); font-weight: 700;
+            color: var(--secondary); text-shadow: 0 0 25px rgba(0, 255, 133, 0.7);
+            text-align: center; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        @media (max-width: 550px) {
+            :root { --wheel-size: 320px; }
+            .panel { padding: 35px 20px; border-radius: 30px; }
+            .input-row { flex-direction: column; gap: 0; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="brand-header">
-        <h1 class="logo-viatec">VIATEC</h1>
-        <div class="logo-sub">TELECOM</div>
-    </div>
+    <div class="logo">VIATEC</div>
 
     <div id="intro-screen" class="panel">
         <h2 class="promo-text">GIRE A</h2>
         <h2 class="promo-text"><span>ROLETA</span></h2>
-        <h2 class="promo-text" style="font-size: 24px;">E GANHE AGORA</h2>
-        <div class="reward-badge">BRINDES EXCLUSIVOS</div>
-        <button class="btn btn-primary" onclick="changeScreen('lead-form')">COMEÇAR</button>
+        <h2 class="promo-text" style="font-size: 24px;">E GANHE</h2>
+        <div class="reward-badge">BRINDES E BENEFÍCIOS</div>
+        <p class="panel-desc" style="margin-top: 25px;">Uma oportunidade exclusiva para você.</p>
+        <button class="btn btn-primary" onclick="showLeadForm()">COMEÇAR AGORA</button>
     </div>
 
     <div id="lead-form" class="panel">
-        <h2 style="margin-bottom: 20px; font-family: Montserrat;">IDENTIFICAÇÃO</h2>
+        <h2 class="promo-text" style="font-size: 28px; margin-bottom: 20px;">AUTENTICAÇÃO</h2>
+        <p class="panel-desc">Preencha seus dados para liberar o scanner de prêmios.</p>
+        
         <div class="input-group">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             <input type="text" id="userName" placeholder="Nome Completo">
         </div>
+        
         <div class="input-group">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.26 1.12.32 2.33.5 3.57.5.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.18 2.45.5 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            <input type="tel" id="userTel" placeholder="(00) 00000-0000" maxlength="15">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input type="email" id="userEmail" placeholder="Seu melhor E-mail">
         </div>
-        <div class="input-group">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <input type="text" id="userCity" placeholder="Cidade">
+        
+        <div class="input-row">
+            <div class="input-group">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.26 1.12.32 2.33.5 3.57.5.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.18 2.45.5 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <input type="tel" id="userTel" placeholder="(00) 00000-0000" maxlength="15">
+            </div>
+            <div class="input-group">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <input type="text" id="userCity" placeholder="Sua Cidade">
+            </div>
         </div>
-        <button class="btn btn-primary" onclick="validateAndStart()">LIBERAR ROLETA</button>
+        
+        <button class="btn btn-primary" onclick="validateAndStart()">ENTRAR NO JOGO</button>
     </div>
 
     <div id="wheel-game">
         <div class="wheel-stage">
-            <div class="pointer"><svg width="40" height="50"><path d="M20 50 L40 0 L0 0 Z" fill="var(--secondary)"/></svg></div>
+            <div class="pointer-scanner">
+                <svg width="50" height="60" viewBox="0 0 50 60">
+                    <path d="M25 60 L50 0 L0 0 Z" fill="var(--secondary)"/>
+                </svg>
+            </div>
+            
             <div class="static-rim"></div>
+            
+            <div class="cyber-hub">
+                <div style="width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 20px var(--primary);"></div>
+            </div>
+            
             <canvas id="canvas" width="1000" height="1000"></canvas>
         </div>
-        <button class="btn btn-spin" id="spinBtn" onclick="spin()">GIRAR AGORA</button>
-        <div id="result"></div>
+        <button class="btn btn-spin" id="spinBtn" onclick="executeSpin()">INICIAR SCANNER</button>
+        <div id="result-display"></div>
     </div>
 </div>
 
 <script>
-    const prizes = [
-        { t: "INSTALAÇÃO", s: "GRÁTIS", i: "📡" },
-        { t: "MENSALIDADE", s: "ISENTA", i: "🎁" },
-        { t: "DESCONTO", s: "30% OFF", i: "💳" },
-        { t: "UPGRADE", s: "DOBRO MEGA", i: "🚀" },
-        { t: "ROTEADOR", s: "GIGA PLUS", i: "📶" },
-        { t: "BRINDE", s: "PREMIUM", i: "🛍️" }
-    ];
-
-    function changeScreen(id) {
-        document.querySelectorAll('.panel, #wheel-game').forEach(el => el.style.display = 'none');
-        document.getElementById(id).style.display = id === 'wheel-game' ? 'flex' : 'flex';
-        if(id === 'wheel-game') draw();
-    }
-
-    // Máscara Telefone
-    document.getElementById('userTel').addEventListener('input', e => {
+    // Máscara de Telefone (DDD) 00-00000-0000
+    const telInput = document.getElementById('userTel');
+    telInput.addEventListener('input', (e) => {
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
     });
 
-    function draw() {
-        const ctx = document.getElementById('canvas').getContext('2d');
-        const arc = (Math.PI * 2) / prizes.length;
-        prizes.forEach((p, i) => {
+    const prizes = [
+        { t: "INSTALAÇÃO", s: "GRÁTIS", i: "📡" },
+        { t: "DESCONTO", s: "30% OFF", i: "💎" },
+        { t: "MENSALIDADE", s: "ISENTA", i: "🎁" },
+        { t: "UPGRADE", s: "DOBRO MEGA", i: "🚀" },
+        { t: "ROTEADOR", s: "GIGA", i: "📶" },
+        { t: "BRINDE", s: "PREMIUM", i: "🛍️" }
+    ];
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawWheel() {
+        const sections = prizes.length;
+        const arc = (2 * Math.PI) / sections;
+        const centerX = 500;
+        const centerY = 500;
+        const radius = 500;
+
+        for (let i = 0; i < sections; i++) {
             const angle = i * arc;
             ctx.save();
-            ctx.beginPath(); ctx.moveTo(500, 500); ctx.arc(500, 500, 500, angle, angle + arc);
-            ctx.fillStyle = i % 2 ? "#1e2c4e" : "#0a172e"; ctx.fill();
-            ctx.translate(500, 500); ctx.rotate(angle + arc/2);
-            ctx.fillStyle = "white"; ctx.font = "bold 30px Rajdhani"; ctx.textAlign = "center";
-            ctx.fillText(p.t, 350, 20); ctx.fillStyle = "#00ff85"; ctx.fillText(p.s, 350, 60);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            // Disco interno perfeitamente redondo
+            ctx.arc(centerX, centerY, radius - 2, angle, angle + arc); // -2px para evitar qualquer rebarba
+            
+            // Fundo de fatia com profundidade cyber
+            const grad = ctx.createRadialGradient(centerX, centerY, 100, centerX, centerY, radius);
+            grad.addColorStop(0, "#0a172e");
+            grad.addColorStop(1, i % 2 === 0 ? "#1e2c4e" : "#070b14");
+            
+            ctx.fillStyle = grad;
+            ctx.fill();
+            
+            // Divisores de Neon Tech muito sutis
+            ctx.strokeStyle = "rgba(0, 212, 255, 0.1)";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Conteúdo
+            ctx.translate(centerX, centerY);
+            ctx.rotate(angle + arc / 2);
+            
+            ctx.textAlign = "center";
+            
+            // Ícone grande
+            ctx.font = "60px Arial";
+            ctx.fillStyle = "white";
+            ctx.fillText(prizes[i].i, 380, -10);
+
+            // Texto Principal
+            ctx.font = "bold 28px Rajdhani";
+            ctx.fillText(prizes[i].t, 380, 40);
+
+            // Subtexto Neon
+            ctx.fillStyle = "#00ff85";
+            ctx.font = "bold 22px Rajdhani";
+            ctx.fillText(prizes[i].s, 380, 75);
+
             ctx.restore();
-        });
+        }
+    }
+
+    // Navegação entre Telas
+    function showLeadForm() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('lead-form').style.display = 'flex';
     }
 
     function validateAndStart() {
-        if(document.getElementById('userName').value.length < 3) return alert("Preencha o nome");
-        changeScreen('wheel-game');
+        const nome = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const tel = document.getElementById('userTel').value.trim();
+        const cidade = document.getElementById('userCity').value.trim();
+
+        if (nome.length < 3) { alert("Protocolo Errado: Nome muito curto."); return; }
+        if (!email.includes('@')) { alert("Protocolo Errado: E-mail inválido."); return; }
+        if (tel.length < 14) { alert("Protocolo Errado: Telefone incompleto."); return; }
+        if (cidade.length < 2) { alert("Protocolo Errado: Informe sua cidade."); return; }
+
+        document.getElementById('lead-form').style.display = 'none';
+        document.getElementById('wheel-game').style.display = 'flex';
+        // O desenho é feito apenas uma vez
+        drawWheel();
     }
 
-    function spin() {
+    function executeSpin() {
         const btn = document.getElementById('spinBtn');
         btn.disabled = true;
-        const deg = Math.floor(3000 + Math.random() * 3000);
-        document.getElementById('canvas').style.transform = `rotate(${deg}deg)`;
+        btn.innerText = "ROTACIONANDO...";
+
+        const rotations = 360 * 12; // Mais voltas para maior suspense
+        const randomAngle = Math.floor(Math.random() * 360);
+        const totalRotation = rotations + randomAngle;
+
+        // O disco interno agora gira perfeitamente liso
+        canvas.style.transform = `rotate(${totalRotation}deg)`;
+
         setTimeout(() => {
-            const winIdx = Math.floor(((360 - (deg % 360) + 270) % 360) / (360 / prizes.length));
-            document.getElementById('result').innerText = "GANHOU: " + prizes[winIdx].t;
-        }, 9000);
+            const finalAngle = randomAngle % 360;
+            const winIdx = Math.floor(((360 - finalAngle + 270) % 360) / (360 / prizes.length));
+            const win = prizes[winIdx];
+
+            document.getElementById('result-display').innerHTML = 
+                `🎉 SCANNER DETECTOU:<br>${win.t} ${win.s}`;
+            btn.innerText = "PRÊMIO DETECTADO";
+        }, 9000); // 9 segundos de suspense
     }
 </script>
+
 </body>
 </html>
