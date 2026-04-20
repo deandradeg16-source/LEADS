@@ -1,1 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViaTec | Conexão Premiada</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Rajdhani:wght@600;700&display=swap');
 
+        :root {
+            --primary: #0082ff;
+            --secondary: #00ff85;
+            --dark-core: #010306;
+            --panel-bg: rgba(10, 15, 25, 0.9);
+            --border: rgba(255, 255, 255, 0.05);
+            --wheel-size: 500px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--dark-core);
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            font-family: 'Rajdhani', sans-serif; color: white;
+            background: radial-gradient(circle at center, #0a172e 0%, #010306 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex; flex-direction: column; align-items: center;
+            width: 100%; max-width: 650px; padding: 20px;
+        }
+
+        /* --- LOGO FIXO NO TOPO --- */
+        .brand-header {
+            display: flex; flex-direction: column; align-items: center;
+            margin-bottom: 25px; text-align: center;
+        }
+
+        .logo-viatec {
+            font-family: 'Montserrat', sans-serif; font-size: 42px; font-weight: 900;
+            letter-spacing: -2px; margin: 0; line-height: 1;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(0, 130, 255, 0.4));
+        }
+
+        .logo-sub {
+            font-size: 11px; letter-spacing: 5px; color: var(--primary);
+            text-transform: uppercase; margin-top: 5px; font-weight: 700;
+        }
+
+        /* --- PAINÉIS --- */
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 40px; border: 1px solid var(--border);
+            padding: 40px; text-align: center; width: 100%;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* --- TELAS --- */
+        #lead-form, #wheel-game { display: none; }
+
+        .promo-text { font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 8vw, 50px); text-transform: uppercase; margin-bottom: 5px; line-height: 0.85; }
+        .promo-text span { color: var(--secondary); text-shadow: 0 0 20px rgba(0, 255, 133, 0.4); }
+        .reward-badge { background: white; color: #010306; font-family: 'Montserrat', sans-serif; padding: 10px 20px; border-radius: 6px; font-size: 19px; margin-top: 20px; text-transform: uppercase; font-weight: 900; }
+
+        /* --- FORMULÁRIO --- */
+        .input-group { width: 100%; position: relative; margin-bottom: 12px; }
+        .input-group input {
+            width: 100%; padding: 16px 16px 16px 45px;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+            border-radius: 12px; color: white; font-size: 16px; transition: 0.3s;
+        }
+        .input-group input:focus { border-color: var(--primary); outline: none; background: rgba(0, 212, 255, 0.05); }
+        .input-group svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
+
+        /* --- ROLETA --- */
+        .wheel-stage {
+            position: relative; width: var(--wheel-size); height: var(--wheel-size);
+            transform: rotateX(20deg); margin-bottom: 40px;
+        }
+        .static-rim {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; border: 18px solid #0f1a30; z-index: -1;
+            box-shadow: 0 15px 0 #050810, 0 30px 50px rgba(0,0,0,0.8);
+        }
+        #canvas { width: calc(100% - 36px); height: calc(100% - 36px); margin: 18px; border-radius: 50%; transition: transform 9s cubic-bezier(0.15, 0, 0, 1); }
+        .pointer { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); z-index: 100; filter: drop-shadow(0 0 10px var(--secondary)); }
+
+        /* --- BOTÕES --- */
+        .btn {
+            padding: 20px 50px; font-family: 'Montserrat', sans-serif; font-weight: 900;
+            text-transform: uppercase; cursor: pointer; border: none; border-radius: 50px;
+            width: 100%; font-size: 18px; transition: 0.3s;
+        }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), #0057ff); color: white; box-shadow: 0 10px 30px rgba(0, 130, 255, 0.4); margin-top: 30px; }
+        .btn-spin { background: var(--secondary); color: #010306; max-width: 300px; box-shadow: 0 10px 30px rgba(0, 255, 133, 0.3); }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        #result { margin-top: 25px; font-size: 28px; color: var(--secondary); text-align: center; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 550px) { :root { --wheel-size: 320px; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="brand-header">
+        <h1 class="logo-viatec">VIATEC</h1>
+        <div class="logo-sub">TELECOM</div>
+    </div>
+
+    <div id="intro-screen" class="panel">
+        <h2 class="promo-text">GIRE A</h2>
+        <h2 class="promo-text"><span>ROLETA</span></h2>
+        <h2 class="promo-text" style="font-size: 24px;">E GANHE AGORA</h2>
+        <div class="reward-badge">BRINDES EXCLUSIVOS</div>
+        <button class="btn btn-primary" onclick="changeScreen('lead-form')">COMEÇAR</button>
+    </div>
+
+    <div id="lead-form" class="panel">
+        <h2 style="margin-bottom: 20px; font-family: Montserrat;">IDENTIFICAÇÃO</h2>
+        <div class="input-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input type="text" id="userName" placeholder="Nome Completo">
+        </div>
+        <div class="input-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.26 1.12.32 2.33.5 3.57.5.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.18 2.45.5 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <input type="tel" id="userTel" placeholder="(00) 00000-0000" maxlength="15">
+        </div>
+        <div class="input-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <input type="text" id="userCity" placeholder="Cidade">
+        </div>
+        <button class="btn btn-primary" onclick="validateAndStart()">LIBERAR ROLETA</button>
+    </div>
+
+    <div id="wheel-game">
+        <div class="wheel-stage">
+            <div class="pointer"><svg width="40" height="50"><path d="M20 50 L40 0 L0 0 Z" fill="var(--secondary)"/></svg></div>
+            <div class="static-rim"></div>
+            <canvas id="canvas" width="1000" height="1000"></canvas>
+        </div>
+        <button class="btn btn-spin" id="spinBtn" onclick="spin()">GIRAR AGORA</button>
+        <div id="result"></div>
+    </div>
+</div>
+
+<script>
+    const prizes = [
+        { t: "INSTALAÇÃO", s: "GRÁTIS", i: "📡" },
+        { t: "MENSALIDADE", s: "ISENTA", i: "🎁" },
+        { t: "DESCONTO", s: "30% OFF", i: "💳" },
+        { t: "UPGRADE", s: "DOBRO MEGA", i: "🚀" },
+        { t: "ROTEADOR", s: "GIGA PLUS", i: "📶" },
+        { t: "BRINDE", s: "PREMIUM", i: "🛍️" }
+    ];
+
+    function changeScreen(id) {
+        document.querySelectorAll('.panel, #wheel-game').forEach(el => el.style.display = 'none');
+        document.getElementById(id).style.display = id === 'wheel-game' ? 'flex' : 'flex';
+        if(id === 'wheel-game') draw();
+    }
+
+    // Máscara Telefone
+    document.getElementById('userTel').addEventListener('input', e => {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+
+    function draw() {
+        const ctx = document.getElementById('canvas').getContext('2d');
+        const arc = (Math.PI * 2) / prizes.length;
+        prizes.forEach((p, i) => {
+            const angle = i * arc;
+            ctx.save();
+            ctx.beginPath(); ctx.moveTo(500, 500); ctx.arc(500, 500, 500, angle, angle + arc);
+            ctx.fillStyle = i % 2 ? "#1e2c4e" : "#0a172e"; ctx.fill();
+            ctx.translate(500, 500); ctx.rotate(angle + arc/2);
+            ctx.fillStyle = "white"; ctx.font = "bold 30px Rajdhani"; ctx.textAlign = "center";
+            ctx.fillText(p.t, 350, 20); ctx.fillStyle = "#00ff85"; ctx.fillText(p.s, 350, 60);
+            ctx.restore();
+        });
+    }
+
+    function validateAndStart() {
+        if(document.getElementById('userName').value.length < 3) return alert("Preencha o nome");
+        changeScreen('wheel-game');
+    }
+
+    function spin() {
+        const btn = document.getElementById('spinBtn');
+        btn.disabled = true;
+        const deg = Math.floor(3000 + Math.random() * 3000);
+        document.getElementById('canvas').style.transform = `rotate(${deg}deg)`;
+        setTimeout(() => {
+            const winIdx = Math.floor(((360 - (deg % 360) + 270) % 360) / (360 / prizes.length));
+            document.getElementById('result').innerText = "GANHOU: " + prizes[winIdx].t;
+        }, 9000);
+    }
+</script>
+</body>
+</html>
