@@ -75,7 +75,16 @@
             letter-spacing: 1px;
         }
 
-        #intro-screen { }
+        #lead-form {
+            display: none;
+        }
+
+        #wheel-game {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
 
         .promo-text {
             font-family: 'Montserrat', sans-serif;
@@ -99,10 +108,6 @@
             font-size: 20px;
             margin-top: 15px;
             text-transform: uppercase;
-        }
-
-        #lead-form {
-            display: none;
         }
 
         .input-group {
@@ -140,13 +145,6 @@
         .input-row {
             display: flex;
             gap: 14px;
-            width: 100%;
-        }
-
-        #wheel-game {
-            display: none;
-            flex-direction: column;
-            align-items: center;
             width: 100%;
         }
 
@@ -282,6 +280,10 @@
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @media (max-width: 550px) {
@@ -374,7 +376,7 @@
 <script>
     const telInput = document.getElementById('userTel');
     telInput.addEventListener('input', (e) => {
-        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+        let x = e.target.value.replace(/\\D/g, '').match(/(\\d{0,2})(\\d{0,5})(\\d{0,4})/);
         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
     });
 
@@ -384,12 +386,14 @@
         { t: "MENSALIDADE", s: "ISENTA", i: "🎁" },
         { t: "UPGRADE", s: "DOBRO MEGA", i: "🚀" },
         { t: "ROTEADOR", s: "GIGA", i: "📶" },
-        { t: "BRINDE", s: "PREMIUM", i: "🛍️" },
-        { t: "NÃO FOI DESSA", s: "VEZ", i: "❌" }
+        { t: "WIFI", s: "TURBINADO", i: "⚡" },
+        { t: "COMBO", s: "EXCLUSIVO", i: "📺" }
     ];
 
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultDisplay = document.getElementById('result-display');
 
     let currentRotation = 0;
     let wheelDrawn = false;
@@ -522,10 +526,36 @@
         }, 250);
     }
 
+    function voltarInicio() {
+        resultDisplay.innerHTML = "";
+
+        spinBtn.innerText = "GIRAR";
+        spinBtn.disabled = false;
+
+        currentRotation = 0;
+        canvas.style.transition = "none";
+        canvas.style.transform = "rotate(0deg)";
+
+        setTimeout(() => {
+            canvas.style.transition = "transform 9s cubic-bezier(0.15, 0, 0, 1)";
+        }, 50);
+
+        // limpa os campos do formulário
+        document.getElementById('userName').value = "";
+        document.getElementById('userEmail').value = "";
+        document.getElementById('userTel').value = "";
+        document.getElementById('userCity').value = "";
+
+        document.getElementById('wheel-game').style.display = "none";
+        document.getElementById('lead-form').style.display = "none";
+        document.getElementById('intro-screen').style.display = "flex";
+    }
+
     function executeSpin() {
-        const btn = document.getElementById('spinBtn');
-        btn.disabled = true;
-        btn.innerText = "ROTACIONANDO...";
+        if (spinBtn.disabled) return;
+
+        spinBtn.disabled = true;
+        spinBtn.innerText = "ROTACIONANDO...";
 
         const rotations = 360 * 12;
         const randomAngle = Math.floor(Math.random() * 360);
@@ -538,14 +568,15 @@
             const winIdx = Math.floor(((360 - finalAngle + 270) % 360) / (360 / prizes.length)) % prizes.length;
             const win = prizes[winIdx];
 
-            document.getElementById('result-display').innerHTML =
-                `🎉 PARABÉNS VOCÊ GANHOU:<br>${win.t} ${win.s}`;
-
+            resultDisplay.innerHTML = `🎉 PARABÉNS VOCÊ GANHOU:<br>${win.t} ${win.s}`;
             soltarFogos();
 
-            btn.innerText = "PRÊMIO DETECTADO";
-            btn.disabled = false;
+            spinBtn.innerText = "PRÊMIO DETECTADO";
             currentRotation = totalRotation % 360;
+
+            setTimeout(() => {
+                voltarInicio();
+            }, 10000);
         }, 9000);
     }
 </script>
