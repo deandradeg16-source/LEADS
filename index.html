@@ -459,7 +459,41 @@
         wheelDrawn = true;
     }
 
+    async function buscarCampanhaAtiva() {
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/campanhas?select=id,nome&ativa=eq.true&limit=1`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            const erro = await response.text();
+            throw new Error(erro || "Erro ao buscar campanha ativa");
+        }
+
+        const campanhas = await response.json();
+
+        if (!campanhas || !campanhas.length) {
+            throw new Error("Nenhuma campanha ativa encontrada");
+        }
+
+        return campanhas[0];
+    }
+
     async function salvarLeadNoSupabase(lead) {
+        const campanhaAtiva = await buscarCampanhaAtiva();
+
+        const leadComCampanha = {
+            ...lead,
+            campanha_id: campanhaAtiva.id
+        };
+
         const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
             method: "POST",
             headers: {
@@ -468,13 +502,15 @@
                 "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
                 "Prefer": "return=minimal"
             },
-            body: JSON.stringify(lead)
+            body: JSON.stringify(leadComCampanha)
         });
 
         if (!response.ok) {
             const erro = await response.text();
             throw new Error(erro || "Erro ao salvar lead");
         }
+
+        return campanhaAtiva;
     }
 
     function showLeadForm() {
@@ -612,11 +648,11 @@
             };
 
             try {
-                await salvarLeadNoSupabase(lead);
-                statusMsg.textContent = "Lead salvo com sucesso.";
+                const campanhaAtiva = await salvarLeadNoSupabase(lead);
+                statusMsg.textContent = `Lead salvo com sucesso em: ${campanhaAtiva.nome}`;
             } catch (e) {
                 console.error("Erro ao salvar lead:", e);
-                statusMsg.textContent = "Erro ao salvar lead.";
+                statusMsg.textContent = e.message || "Erro ao salvar lead.";
             }
 
             spinBtn.innerText = "PRÊMIO DETECTADO";
