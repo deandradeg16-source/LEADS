@@ -311,7 +311,7 @@
       grid-template-columns:repeat(4, minmax(180px,1fr));
       gap:14px;
       margin-bottom:18px;
-      scroll-margin-top: 20px;
+      scroll-margin-top:20px;
     }
 
     .stat{
@@ -454,7 +454,7 @@
       border-radius:24px;
       box-shadow:var(--shadow);
       overflow:hidden;
-      scroll-margin-top: 20px;
+      scroll-margin-top:20px;
     }
 
     .table-wrap{
@@ -468,7 +468,7 @@
     }
 
     thead th{
-      text-align:left;
+      text-align:center;
       font-size:.83rem;
       color:#a9c7e5;
       font-weight:700;
@@ -484,7 +484,8 @@
     tbody td{
       padding:14px;
       border-bottom:1px solid rgba(255,255,255,.05);
-      vertical-align:top;
+      vertical-align:middle;
+      text-align:center;
       font-size:.94rem;
       color:#eef6ff;
     }
@@ -497,16 +498,19 @@
       font-weight:700;
       color:#fff;
       margin-bottom:4px;
+      text-align:center;
     }
 
     .lead-sub{
       color:var(--muted);
       font-size:.86rem;
+      text-align:center;
     }
 
     .status-inline{
       position:relative;
       display:inline-block;
+      margin:0 auto;
     }
 
     .status-pill{
@@ -560,6 +564,7 @@
       display:grid;
       gap:6px;
       z-index:20;
+      text-align:left;
     }
 
     .status-option{
@@ -582,6 +587,7 @@
     .row-actions{
       display:grid;
       gap:8px;
+      justify-items:center;
     }
 
     .obs-box textarea{
@@ -596,12 +602,26 @@
       outline:none;
       min-height:64px;
       resize:vertical;
+      text-align:left;
     }
 
     .row-actions .btn{
-      width:100%;
+      width:auto;
+      min-width:140px;
       padding:10px 14px;
       border-radius:12px;
+    }
+
+    .whatsBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .btn-icon{
+      font-size:1rem;
+      line-height:1;
     }
 
     .table-footer{
@@ -647,7 +667,7 @@
       grid-template-columns:repeat(3, minmax(200px,1fr));
       gap:14px;
       margin-top:18px;
-      scroll-margin-top: 20px;
+      scroll-margin-top:20px;
     }
 
     .insight{
@@ -1104,7 +1124,8 @@
           <td>
             <div class="row-actions">
               <button class="btn btn-green whatsBtn" data-id="${lead.id}" data-nome="${encodeURIComponent(lead.nome || "")}" data-tel="${encodeURIComponent(lead.telefone || "")}" data-premio="${encodeURIComponent(lead.premio || "")}">
-                WhatsApp
+                <span class="btn-icon">💬</span>
+                <span>WhatsApp</span>
               </button>
             </div>
           </td>
