@@ -374,7 +374,7 @@
 
     .filters-grid{
       display:grid;
-      grid-template-columns:1.4fr .8fr auto auto;
+      grid-template-columns:1.2fr .8fr .8fr auto auto;
       gap:12px;
     }
 
@@ -444,7 +444,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:1220px;
+      min-width:1360px;
     }
 
     thead th{
@@ -485,6 +485,20 @@
       color:var(--muted);
       font-size:.86rem;
       text-align:center;
+    }
+
+    .campaign-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:700;
+      color:#9fe4ff;
+      background:rgba(30,144,255,.10);
+      border:1px solid rgba(30,144,255,.22);
+      max-width:220px;
     }
 
     .status-inline{
@@ -598,8 +612,8 @@
     }
 
     .whats-svg{
-      width:46px;
-      height:46px;
+      width:32px;
+      height:32px;
       color:#25d366;
       transition:all .2s ease;
       display:block;
@@ -762,11 +776,11 @@
         </div>
 
         <nav class="nav">
-          <a class="nav-item active" href="#dashboard" data-target="dashboard"><span class="nav-icon">▦</span> Dashboard</a>
-          <a class="nav-item" href="#leads" data-target="leads"><span class="nav-icon">◎</span> Leads</a>
-          <a class="nav-item" href="#estatisticas" data-target="estatisticas"><span class="nav-icon">◫</span> Estatísticas</a>
-          <a class="nav-item" href="#exportacoes" data-target="exportacoes"><span class="nav-icon">⇪</span> Exportações</a>
-          <a class="nav-item" href="#configuracoes" data-target="configuracoes"><span class="nav-icon">⚙</span> Configurações</a>
+          <a class="nav-item active" href="#dashboard"><span class="nav-icon">▦</span> Dashboard</a>
+          <a class="nav-item" href="#leads"><span class="nav-icon">◎</span> Leads</a>
+          <a class="nav-item" href="#estatisticas"><span class="nav-icon">◫</span> Estatísticas</a>
+          <a class="nav-item" href="#exportacoes"><span class="nav-icon">⇪</span> Exportações</a>
+          <a class="nav-item" href="#configuracoes"><span class="nav-icon">⚙</span> Configurações</a>
         </nav>
       </div>
 
@@ -788,7 +802,7 @@
       <div class="topbar">
         <div class="title-box">
           <h1>Painel ViaTec</h1>
-          <p>Leads captados na roleta promocional.</p>
+          <p>Leads captados na roleta promocional, organizados por campanha.</p>
         </div>
 
         <div class="top-actions">
@@ -805,7 +819,7 @@
             <div class="stat-icon">👥</div>
           </div>
           <div class="stat-value" id="cardTotal">0</div>
-          <div class="stat-sub">Todos os tempos</div>
+          <div class="stat-sub">Todos os filtros aplicados</div>
         </div>
 
         <div class="stat blue">
@@ -839,6 +853,9 @@
       <section class="filters-card">
         <div class="filters-grid">
           <input type="text" id="searchInput" placeholder="Buscar por nome, telefone, cidade, prêmio ou observação">
+          <select id="campaignFilter">
+            <option value="">Todas as campanhas</option>
+          </select>
           <select id="statusFilter">
             <option value="">Todos os status</option>
             <option value="Novo">Novo</option>
@@ -868,6 +885,7 @@
                 <th>Lead</th>
                 <th>Telefone</th>
                 <th>Cidade</th>
+                <th>Campanha</th>
                 <th>Prêmio</th>
                 <th>Data</th>
                 <th>Status</th>
@@ -896,8 +914,8 @@
 
       <section id="estatisticas" class="insights">
         <div class="insight">
-          <h4>Responda rápido</h4>
-          <p>Leads novos aparecem primeiro. Quanto mais rápido o contato, maior a chance de conversão.</p>
+          <h4>Campanhas separadas</h4>
+          <p>Agora você pode filtrar os leads por campanha e acompanhar cada feira sem misturar os dados.</p>
         </div>
         <div class="insight">
           <h4>Dica de ouro</h4>
@@ -905,31 +923,31 @@
         </div>
         <div class="insight">
           <h4>Acompanhe resultados</h4>
-          <p>Mantenha status atualizados para acompanhar o desempenho do time comercial com mais clareza.</p>
+          <p>Mantenha os status atualizados para comparar o desempenho de cada campanha com mais clareza.</p>
         </div>
       </section>
 
       <section id="exportacoes" class="insights">
         <div class="insight">
           <h4>Exportação de leads</h4>
-          <p>Baixe todos os leads cadastrados em CSV para trabalhar no Excel ou compartilhar com o comercial.</p>
+          <p>Baixe todos os leads filtrados em CSV, incluindo a campanha de origem.</p>
           <button class="btn btn-green" id="exportBtnSecondary">Exportar CSV</button>
         </div>
         <div class="insight">
           <h4>Atualização manual</h4>
-          <p>Use o botão de atualizar para recarregar os leads mais recentes direto do Supabase.</p>
+          <p>Use o botão de atualizar para recarregar campanhas e leads mais recentes direto do Supabase.</p>
           <button class="btn btn-secondary" id="refreshBtnSecondary">Atualizar agora</button>
         </div>
         <div class="insight">
           <h4>Controle comercial</h4>
-          <p>Filtre por status para identificar quem ainda precisa ser contatado e quem já converteu.</p>
+          <p>Filtre por campanha e status para identificar quais eventos geraram os melhores leads.</p>
         </div>
       </section>
 
       <section id="configuracoes" class="insights">
         <div class="insight">
           <h4>Configurações do painel</h4>
-          <p>Este ambiente é protegido por login e conectado ao banco de leads do evento.</p>
+          <p>Este ambiente é protegido por login e conectado ao banco de leads e campanhas do evento.</p>
         </div>
         <div class="insight">
           <h4>Status do fluxo</h4>
@@ -937,7 +955,7 @@
         </div>
         <div class="insight">
           <h4>Organização</h4>
-          <p>Atualize os status e mantenha observações preenchidas para dar mais clareza ao comercial.</p>
+          <p>Com campanhas separadas, você não precisa apagar dados antigos para começar uma nova feira.</p>
         </div>
       </section>
     </main>
@@ -961,6 +979,7 @@
     const leadsBody = document.getElementById("leadsBody");
     const searchInput = document.getElementById("searchInput");
     const statusFilter = document.getElementById("statusFilter");
+    const campaignFilter = document.getElementById("campaignFilter");
     const statusMsg = document.getElementById("statusMsg");
     const emptyMsg = document.getElementById("emptyMsg");
     const footerCount = document.getElementById("footerCount");
@@ -971,6 +990,8 @@
     const cardFechados = document.getElementById("cardFechados");
 
     let todosLeads = [];
+    let todasCampanhas = [];
+    let campanhasMap = {};
 
     function mostrarAdmin() {
       loginSection.classList.add("hidden");
@@ -1021,6 +1042,11 @@
       return "status-novo";
     }
 
+    function nomeCampanha(campanhaId) {
+      if (!campanhaId) return "Sem campanha";
+      return campanhasMap[campanhaId] || "Sem campanha";
+    }
+
     function atualizarCards(lista) {
       const total = lista.length;
       const novos = lista.filter(l => (l.status || "Novo") === "Novo").length;
@@ -1048,8 +1074,9 @@
         return;
       }
 
-      const headers = ["Nome", "Email", "Telefone", "Cidade", "Premio", "Status", "Observacoes", "Data"];
+      const headers = ["Campanha", "Nome", "Email", "Telefone", "Cidade", "Premio", "Status", "Observacoes", "Data"];
       const rows = lista.map(l => [
+        nomeCampanha(l.campanha_id),
         l.nome || "",
         l.email || "",
         l.telefone || "",
@@ -1071,6 +1098,17 @@
       link.click();
     }
 
+    function preencherFiltroCampanhas() {
+      campaignFilter.innerHTML = `<option value="">Todas as campanhas</option>`;
+
+      for (const campanha of todasCampanhas) {
+        const option = document.createElement("option");
+        option.value = campanha.id;
+        option.textContent = campanha.nome;
+        campaignFilter.appendChild(option);
+      }
+    }
+
     function renderTabela(lista) {
       leadsBody.innerHTML = "";
 
@@ -1087,6 +1125,7 @@
         const tr = document.createElement("tr");
         const statusAtual = lead.status || "Novo";
         const obsAtual = lead.observacoes || "";
+        const campanhaNome = nomeCampanha(lead.campanha_id);
 
         tr.innerHTML = `
           <td>
@@ -1095,6 +1134,7 @@
           </td>
           <td>${lead.telefone || "-"}</td>
           <td>${lead.cidade || "-"}</td>
+          <td><span class="campaign-badge">${campanhaNome}</span></td>
           <td>${lead.premio || "-"}</td>
           <td>${formatarData(lead.created_at)}</td>
           <td>
@@ -1148,7 +1188,7 @@
 
           try {
             await atualizarLead(id, { status: "Iniciado" });
-            await carregarLeads();
+            await carregarTudo();
             statusMsg.textContent = "Lead marcado como Iniciado.";
           } catch (error) {
             console.error(error);
@@ -1195,7 +1235,7 @@
           try {
             statusMsg.textContent = "Atualizando status...";
             await atualizarLead(id, { status: novoStatus });
-            await carregarLeads();
+            await carregarTudo();
             statusMsg.textContent = "Status atualizado.";
           } catch (error) {
             console.error(error);
@@ -1208,6 +1248,7 @@
     function aplicarFiltro() {
       const termo = searchInput.value.trim().toLowerCase();
       const status = statusFilter.value;
+      const campanhaId = campaignFilter.value;
 
       let lista = [...todosLeads];
 
@@ -1218,8 +1259,13 @@
           (lead.telefone || "").toLowerCase().includes(termo) ||
           (lead.cidade || "").toLowerCase().includes(termo) ||
           (lead.premio || "").toLowerCase().includes(termo) ||
-          (lead.observacoes || "").toLowerCase().includes(termo)
+          (lead.observacoes || "").toLowerCase().includes(termo) ||
+          nomeCampanha(lead.campanha_id).toLowerCase().includes(termo)
         );
+      }
+
+      if (campanhaId) {
+        lista = lista.filter((lead) => (lead.campanha_id || "") === campanhaId);
       }
 
       if (status) {
@@ -1230,23 +1276,47 @@
       atualizarCards(lista);
     }
 
-    async function carregarLeads() {
-      statusMsg.textContent = "Carregando leads...";
+    async function carregarCampanhas() {
+      const { data, error } = await supabase
+        .from("campanhas")
+        .select("*")
+        .order("created_at", { ascending: false });
 
+      if (error) throw error;
+
+      todasCampanhas = data || [];
+      campanhasMap = {};
+
+      for (const campanha of todasCampanhas) {
+        campanhasMap[campanha.id] = campanha.nome;
+      }
+
+      preencherFiltroCampanhas();
+    }
+
+    async function carregarLeads() {
       const { data, error } = await supabase
         .from("leads")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error(error);
-        statusMsg.textContent = "Erro ao carregar leads.";
-        return;
-      }
+      if (error) throw error;
 
       todosLeads = data || [];
-      aplicarFiltro();
-      statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
+    }
+
+    async function carregarTudo() {
+      statusMsg.textContent = "Carregando campanhas e leads...";
+
+      try {
+        await carregarCampanhas();
+        await carregarLeads();
+        aplicarFiltro();
+        statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
+      } catch (error) {
+        console.error(error);
+        statusMsg.textContent = "Erro ao carregar dados.";
+      }
     }
 
     async function login() {
@@ -1264,7 +1334,7 @@
 
       loginStatus.textContent = "";
       mostrarAdmin();
-      await carregarLeads();
+      await carregarTudo();
     }
 
     async function logout() {
@@ -1276,15 +1346,38 @@
 
     loginBtn.addEventListener("click", login);
     document.getElementById("logoutBtn").addEventListener("click", logout);
-    document.getElementById("refreshBtn").addEventListener("click", carregarLeads);
-    document.getElementById("reloadBtn").addEventListener("click", carregarLeads);
-    document.getElementById("refreshBtnSecondary").addEventListener("click", carregarLeads);
-    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(todosLeads));
-    document.getElementById("exportBtnSecondary").addEventListener("click", () => exportarCSV(todosLeads));
+    document.getElementById("refreshBtn").addEventListener("click", carregarTudo);
+    document.getElementById("reloadBtn").addEventListener("click", carregarTudo);
+    document.getElementById("refreshBtnSecondary").addEventListener("click", carregarTudo);
+    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(
+      [...todosLeads].filter((lead) => {
+        const termo = searchInput.value.trim().toLowerCase();
+        const status = statusFilter.value;
+        const campanhaId = campaignFilter.value;
+
+        const bateTermo = !termo || (
+          (lead.nome || "").toLowerCase().includes(termo) ||
+          (lead.email || "").toLowerCase().includes(termo) ||
+          (lead.telefone || "").toLowerCase().includes(termo) ||
+          (lead.cidade || "").toLowerCase().includes(termo) ||
+          (lead.premio || "").toLowerCase().includes(termo) ||
+          (lead.observacoes || "").toLowerCase().includes(termo) ||
+          nomeCampanha(lead.campanha_id).toLowerCase().includes(termo)
+        );
+
+        const bateStatus = !status || (lead.status || "Novo") === status;
+        const bateCampanha = !campanhaId || (lead.campanha_id || "") === campanhaId;
+
+        return bateTermo && bateStatus && bateCampanha;
+      })
+    ));
+
+    document.getElementById("exportBtnSecondary").addEventListener("click", () => document.getElementById("exportBtn").click());
 
     document.getElementById("clearFiltersBtn").addEventListener("click", () => {
       searchInput.value = "";
       statusFilter.value = "";
+      campaignFilter.value = "";
       document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("active"));
       document.querySelector('.quick-btn[data-status=""]').classList.add("active");
       aplicarFiltro();
@@ -1319,11 +1412,12 @@
       if (current) current.classList.add("active");
       aplicarFiltro();
     });
+    campaignFilter.addEventListener("change", aplicarFiltro);
 
     const { data: authData } = await supabase.auth.getSession();
     if (authData.session) {
       mostrarAdmin();
-      await carregarLeads();
+      await carregarTudo();
     } else {
       mostrarLogin();
     }
