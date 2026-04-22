@@ -33,6 +33,10 @@
       box-sizing:border-box;
     }
 
+    html{
+      scroll-behavior:smooth;
+    }
+
     body{
       font-family:'Inter',sans-serif;
       background:
@@ -180,6 +184,9 @@
       display:flex;
       flex-direction:column;
       justify-content:space-between;
+      position:sticky;
+      top:0;
+      height:100vh;
     }
 
     .brand{
@@ -304,6 +311,7 @@
       grid-template-columns:repeat(4, minmax(180px,1fr));
       gap:14px;
       margin-bottom:18px;
+      scroll-margin-top: 20px;
     }
 
     .stat{
@@ -376,6 +384,7 @@
       padding:18px;
       box-shadow:var(--shadow);
       margin-bottom:18px;
+      scroll-margin-top: 20px;
     }
 
     .filters-grid{
@@ -446,6 +455,7 @@
       border-radius:24px;
       box-shadow:var(--shadow);
       overflow:hidden;
+      scroll-margin-top: 20px;
     }
 
     .table-wrap{
@@ -495,49 +505,56 @@
       font-size:.86rem;
     }
 
-    .pill{
+    .status-box{
+      display:grid;
+      gap:10px;
+      min-width:160px;
+    }
+
+    .status-pill{
       display:inline-flex;
       align-items:center;
-      padding:7px 12px;
+      justify-content:center;
+      padding:8px 14px;
       border-radius:999px;
-      font-size:.8rem;
+      font-size:.82rem;
       font-weight:800;
       letter-spacing:.2px;
-      margin-bottom:8px;
+      width:max-content;
+      border:1px solid transparent;
     }
 
     .status-novo{
       background:rgba(30,144,255,.14);
       color:#6bc5ff;
-      border:1px solid rgba(30,144,255,.20);
+      border-color:rgba(30,144,255,.20);
     }
 
     .status-contato{
       background:rgba(246,196,69,.14);
       color:#ffd86c;
-      border:1px solid rgba(246,196,69,.20);
+      border-color:rgba(246,196,69,.20);
     }
 
     .status-fechado{
       background:rgba(22,199,132,.14);
       color:#57e9ab;
-      border:1px solid rgba(22,199,132,.20);
+      border-color:rgba(22,199,132,.20);
     }
 
     .status-perdido{
       background:rgba(239,83,80,.14);
       color:#ff9d9b;
-      border:1px solid rgba(239,83,80,.20);
+      border-color:rgba(239,83,80,.20);
     }
 
-    .status-box,
-    .obs-box,
-    .row-actions{
+    .status-actions{
       display:grid;
+      grid-template-columns:1fr;
       gap:8px;
     }
 
-    .status-box select,
+    .status-actions select,
     .obs-box textarea{
       width:100%;
       border:1px solid var(--line);
@@ -548,6 +565,18 @@
       font-size:.92rem;
       font-family:inherit;
       outline:none;
+    }
+
+    .status-save-btn{
+      background:#0d1b2c;
+      border:1px solid var(--line);
+      color:#dceeff;
+    }
+
+    .obs-box,
+    .row-actions{
+      display:grid;
+      gap:8px;
     }
 
     .obs-box textarea{
@@ -604,6 +633,7 @@
       grid-template-columns:repeat(3, minmax(200px,1fr));
       gap:14px;
       margin-top:18px;
+      scroll-margin-top: 20px;
     }
 
     .insight{
@@ -702,11 +732,11 @@
         </div>
 
         <nav class="nav">
-          <a class="nav-item active" href="#"><span class="nav-icon">▦</span> Dashboard</a>
-          <a class="nav-item" href="#"><span class="nav-icon">◎</span> Leads</a>
-          <a class="nav-item" href="#"><span class="nav-icon">◫</span> Estatísticas</a>
-          <a class="nav-item" href="#"><span class="nav-icon">⇪</span> Exportações</a>
-          <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+          <a class="nav-item active" href="#dashboard" data-target="dashboard"><span class="nav-icon">▦</span> Dashboard</a>
+          <a class="nav-item" href="#leads" data-target="leads"><span class="nav-icon">◎</span> Leads</a>
+          <a class="nav-item" href="#estatisticas" data-target="estatisticas"><span class="nav-icon">◫</span> Estatísticas</a>
+          <a class="nav-item" href="#exportacoes" data-target="exportacoes"><span class="nav-icon">⇪</span> Exportações</a>
+          <a class="nav-item" href="#configuracoes" data-target="configuracoes"><span class="nav-icon">⚙</span> Configurações</a>
         </nav>
       </div>
 
@@ -738,7 +768,7 @@
         </div>
       </div>
 
-      <section class="stats">
+      <section id="dashboard" class="stats">
         <div class="stat blue">
           <div class="stat-top">
             <div class="stat-label">Total de leads</div>
@@ -800,7 +830,7 @@
         </div>
       </section>
 
-      <section class="table-card">
+      <section id="leads" class="table-card">
         <div class="table-wrap">
           <table>
             <thead>
@@ -834,7 +864,7 @@
 
       <div class="status-msg" id="statusMsg"></div>
 
-      <section class="insights">
+      <section id="estatisticas" class="insights">
         <div class="insight">
           <h4>Responda rápido</h4>
           <p>Leads novos aparecem primeiro. Quanto mais rápido o contato, maior a chance de conversão.</p>
@@ -846,6 +876,38 @@
         <div class="insight">
           <h4>Acompanhe resultados</h4>
           <p>Mantenha status atualizados para acompanhar o desempenho do time comercial com mais clareza.</p>
+        </div>
+      </section>
+
+      <section id="exportacoes" class="insights">
+        <div class="insight">
+          <h4>Exportação de leads</h4>
+          <p>Baixe todos os leads cadastrados em CSV para trabalhar no Excel ou compartilhar com o comercial.</p>
+          <button class="btn btn-green" id="exportBtnSecondary">Exportar CSV</button>
+        </div>
+        <div class="insight">
+          <h4>Atualização manual</h4>
+          <p>Use o botão de atualizar para recarregar os leads mais recentes direto do Supabase.</p>
+          <button class="btn btn-secondary" id="refreshBtnSecondary">Atualizar agora</button>
+        </div>
+        <div class="insight">
+          <h4>Controle comercial</h4>
+          <p>Filtre por status para identificar quem ainda precisa ser contatado e quem já converteu.</p>
+        </div>
+      </section>
+
+      <section id="configuracoes" class="insights">
+        <div class="insight">
+          <h4>Configurações do painel</h4>
+          <p>Este ambiente é protegido por login e conectado ao banco de leads do evento.</p>
+        </div>
+        <div class="insight">
+          <h4>Status do fluxo</h4>
+          <p>Ao clicar em WhatsApp, o lead é marcado automaticamente como <strong>Em contato</strong>.</p>
+        </div>
+        <div class="insight">
+          <h4>Organização</h4>
+          <p>Atualize os status e mantenha observações preenchidas para dar mais clareza ao comercial.</p>
         </div>
       </section>
     </main>
@@ -1007,13 +1069,16 @@
           <td>${formatarData(lead.created_at)}</td>
           <td>
             <div class="status-box">
-              <span class="pill ${classeStatus(statusAtual)}">${statusAtual}</span>
-              <select data-id="${lead.id}" class="statusSelect">
-                <option value="Novo" ${statusAtual === "Novo" ? "selected" : ""}>Novo</option>
-                <option value="Em contato" ${statusAtual === "Em contato" ? "selected" : ""}>Em contato</option>
-                <option value="Fechado" ${statusAtual === "Fechado" ? "selected" : ""}>Fechado</option>
-                <option value="Perdido" ${statusAtual === "Perdido" ? "selected" : ""}>Perdido</option>
-              </select>
+              <span class="status-pill ${classeStatus(statusAtual)}">${statusAtual}</span>
+              <div class="status-actions">
+                <select data-id="${lead.id}" class="statusSelect">
+                  <option value="Novo" ${statusAtual === "Novo" ? "selected" : ""}>Novo</option>
+                  <option value="Em contato" ${statusAtual === "Em contato" ? "selected" : ""}>Em contato</option>
+                  <option value="Fechado" ${statusAtual === "Fechado" ? "selected" : ""}>Fechado</option>
+                  <option value="Perdido" ${statusAtual === "Perdido" ? "selected" : ""}>Perdido</option>
+                </select>
+                <button class="btn status-save-btn saveStatusBtn" data-id="${lead.id}">Salvar status</button>
+              </div>
             </div>
           </td>
           <td>
@@ -1054,11 +1119,14 @@
         });
       });
 
-      document.querySelectorAll(".statusSelect").forEach(select => {
-        select.addEventListener("change", async () => {
+      document.querySelectorAll(".saveStatusBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const select = document.querySelector(`.statusSelect[data-id="${id}"]`);
+
           try {
             statusMsg.textContent = "Atualizando status...";
-            await atualizarLead(select.dataset.id, { status: select.value });
+            await atualizarLead(id, { status: select.value });
             await carregarLeads();
             statusMsg.textContent = "Status atualizado.";
           } catch (error) {
@@ -1159,7 +1227,9 @@
     document.getElementById("logoutBtn").addEventListener("click", logout);
     document.getElementById("refreshBtn").addEventListener("click", carregarLeads);
     document.getElementById("reloadBtn").addEventListener("click", carregarLeads);
+    document.getElementById("refreshBtnSecondary").addEventListener("click", carregarLeads);
     document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(todosLeads));
+    document.getElementById("exportBtnSecondary").addEventListener("click", () => exportarCSV(todosLeads));
 
     document.getElementById("clearFiltersBtn").addEventListener("click", () => {
       searchInput.value = "";
@@ -1178,13 +1248,18 @@
       });
     });
 
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach(nav => nav.classList.remove("active"));
+        item.classList.add("active");
+      });
+    });
+
     searchInput.addEventListener("input", aplicarFiltro);
     statusFilter.addEventListener("change", () => {
       document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("active"));
       const current = document.querySelector(`.quick-btn[data-status="${statusFilter.value}"]`);
-      if (current) {
-        current.classList.add("active");
-      }
+      if (current) current.classList.add("active");
       aplicarFiltro();
     });
 
