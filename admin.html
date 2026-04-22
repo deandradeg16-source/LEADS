@@ -384,7 +384,6 @@
       padding:18px;
       box-shadow:var(--shadow);
       margin-bottom:18px;
-      scroll-margin-top: 20px;
     }
 
     .filters-grid{
@@ -465,7 +464,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:1280px;
+      min-width:1220px;
     }
 
     thead th{
@@ -505,10 +504,9 @@
       font-size:.86rem;
     }
 
-    .status-box{
-      display:grid;
-      gap:10px;
-      min-width:160px;
+    .status-inline{
+      position:relative;
+      display:inline-block;
     }
 
     .status-pill{
@@ -522,6 +520,7 @@
       letter-spacing:.2px;
       width:max-content;
       border:1px solid transparent;
+      cursor:pointer;
     }
 
     .status-novo{
@@ -548,13 +547,43 @@
       border-color:rgba(239,83,80,.20);
     }
 
-    .status-actions{
+    .status-dropdown{
+      position:absolute;
+      top:44px;
+      left:0;
+      min-width:150px;
+      background:#0b1b2f;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:0 18px 35px rgba(0,0,0,.28);
+      padding:8px;
       display:grid;
-      grid-template-columns:1fr;
+      gap:6px;
+      z-index:20;
+    }
+
+    .status-option{
+      border:none;
+      background:#081524;
+      color:#eef6ff;
+      border-radius:10px;
+      padding:10px 12px;
+      text-align:left;
+      cursor:pointer;
+      font-family:inherit;
+      font-weight:600;
+    }
+
+    .status-option:hover{
+      background:#10243d;
+    }
+
+    .obs-box,
+    .row-actions{
+      display:grid;
       gap:8px;
     }
 
-    .status-actions select,
     .obs-box textarea{
       width:100%;
       border:1px solid var(--line);
@@ -565,21 +594,6 @@
       font-size:.92rem;
       font-family:inherit;
       outline:none;
-    }
-
-    .status-save-btn{
-      background:#0d1b2c;
-      border:1px solid var(--line);
-      color:#dceeff;
-    }
-
-    .obs-box,
-    .row-actions{
-      display:grid;
-      gap:8px;
-    }
-
-    .obs-box textarea{
       min-height:64px;
       resize:vertical;
     }
@@ -789,7 +803,7 @@
 
         <div class="stat yellow">
           <div class="stat-top">
-            <div class="stat-label">Em contato</div>
+            <div class="stat-label">Iniciados</div>
             <div class="stat-icon">📞</div>
           </div>
           <div class="stat-value" id="cardContato">0</div>
@@ -812,7 +826,7 @@
           <select id="statusFilter">
             <option value="">Todos os status</option>
             <option value="Novo">Novo</option>
-            <option value="Em contato">Em contato</option>
+            <option value="Iniciado">Iniciado</option>
             <option value="Fechado">Fechado</option>
             <option value="Perdido">Perdido</option>
           </select>
@@ -824,7 +838,7 @@
           <div class="quick-label">Filtros rápidos:</div>
           <button class="quick-btn active" data-status="">Todos</button>
           <button class="quick-btn" data-status="Novo">Novos</button>
-          <button class="quick-btn" data-status="Em contato">Em contato</button>
+          <button class="quick-btn" data-status="Iniciado">Iniciados</button>
           <button class="quick-btn" data-status="Fechado">Fechados</button>
           <button class="quick-btn" data-status="Perdido">Perdidos</button>
         </div>
@@ -903,7 +917,7 @@
         </div>
         <div class="insight">
           <h4>Status do fluxo</h4>
-          <p>Ao clicar em WhatsApp, o lead é marcado automaticamente como <strong>Em contato</strong>.</p>
+          <p>Ao clicar em WhatsApp, o lead é marcado automaticamente como <strong>Iniciado</strong>.</p>
         </div>
         <div class="insight">
           <h4>Organização</h4>
@@ -985,7 +999,7 @@
     }
 
     function classeStatus(status) {
-      if (status === "Em contato") return "status-contato";
+      if (status === "Iniciado") return "status-contato";
       if (status === "Fechado") return "status-fechado";
       if (status === "Perdido") return "status-perdido";
       return "status-novo";
@@ -994,7 +1008,7 @@
     function atualizarCards(lista) {
       const total = lista.length;
       const novos = lista.filter(l => (l.status || "Novo") === "Novo").length;
-      const contato = lista.filter(l => l.status === "Em contato").length;
+      const contato = lista.filter(l => l.status === "Iniciado").length;
       const fechados = lista.filter(l => l.status === "Fechado").length;
 
       cardTotal.textContent = total;
@@ -1068,16 +1082,16 @@
           <td>${lead.premio || "-"}</td>
           <td>${formatarData(lead.created_at)}</td>
           <td>
-            <div class="status-box">
-              <span class="status-pill ${classeStatus(statusAtual)}">${statusAtual}</span>
-              <div class="status-actions">
-                <select data-id="${lead.id}" class="statusSelect">
-                  <option value="Novo" ${statusAtual === "Novo" ? "selected" : ""}>Novo</option>
-                  <option value="Em contato" ${statusAtual === "Em contato" ? "selected" : ""}>Em contato</option>
-                  <option value="Fechado" ${statusAtual === "Fechado" ? "selected" : ""}>Fechado</option>
-                  <option value="Perdido" ${statusAtual === "Perdido" ? "selected" : ""}>Perdido</option>
-                </select>
-                <button class="btn status-save-btn saveStatusBtn" data-id="${lead.id}">Salvar status</button>
+            <div class="status-inline">
+              <button class="status-pill ${classeStatus(statusAtual)} statusToggleBtn" data-id="${lead.id}">
+                ${statusAtual}
+              </button>
+
+              <div class="status-dropdown hidden" id="status-menu-${lead.id}">
+                <button class="status-option" data-id="${lead.id}" data-status="Novo">Novo</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Iniciado">Iniciado</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Fechado">Fechado</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Perdido">Perdido</button>
               </div>
             </div>
           </td>
@@ -1109,29 +1123,12 @@
           abrirWhatsApp(nome, tel, premio);
 
           try {
-            await atualizarLead(id, { status: "Em contato" });
+            await atualizarLead(id, { status: "Iniciado" });
             await carregarLeads();
-            statusMsg.textContent = "Lead marcado como Em contato.";
+            statusMsg.textContent = "Lead marcado como Iniciado.";
           } catch (error) {
             console.error(error);
             statusMsg.textContent = "Erro ao atualizar status do lead.";
-          }
-        });
-      });
-
-      document.querySelectorAll(".saveStatusBtn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = btn.dataset.id;
-          const select = document.querySelector(`.statusSelect[data-id="${id}"]`);
-
-          try {
-            statusMsg.textContent = "Atualizando status...";
-            await atualizarLead(id, { status: select.value });
-            await carregarLeads();
-            statusMsg.textContent = "Status atualizado.";
-          } catch (error) {
-            console.error(error);
-            statusMsg.textContent = "Erro ao atualizar status.";
           }
         });
       });
@@ -1149,6 +1146,38 @@
           } catch (error) {
             console.error(error);
             statusMsg.textContent = "Erro ao salvar observação.";
+          }
+        });
+      });
+
+      document.querySelectorAll(".statusToggleBtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          const id = btn.dataset.id;
+          const menu = document.getElementById(`status-menu-${id}`);
+
+          document.querySelectorAll(".status-dropdown").forEach(drop => {
+            if (drop !== menu) drop.classList.add("hidden");
+          });
+
+          menu.classList.toggle("hidden");
+        });
+      });
+
+      document.querySelectorAll(".status-option").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const novoStatus = btn.dataset.status;
+
+          try {
+            statusMsg.textContent = "Atualizando status...";
+            await atualizarLead(id, { status: novoStatus });
+            await carregarLeads();
+            statusMsg.textContent = "Status atualizado.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao atualizar status.";
           }
         });
       });
@@ -1252,6 +1281,12 @@
       item.addEventListener("click", () => {
         document.querySelectorAll(".nav-item").forEach(nav => nav.classList.remove("active"));
         item.classList.add("active");
+      });
+    });
+
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".status-dropdown").forEach(drop => {
+        drop.classList.add("hidden");
       });
     });
 
