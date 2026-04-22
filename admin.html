@@ -25,8 +25,16 @@
       --shadow:0 18px 45px rgba(0,0,0,.28);
     }
 
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
     body{
       font-family:'Inter',sans-serif;
       background:
@@ -39,141 +47,782 @@
 
     .hidden{ display:none !important; }
 
-    /* Login Styles */
-    .login-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+    .login-wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
     .login-card{
-      width:100%; max-width:440px; background:rgba(10,26,45,.92); border:1px solid var(--line);
-      border-radius:24px; padding:28px; box-shadow:var(--shadow); backdrop-filter:blur(14px);
+      width:100%;
+      max-width:440px;
+      background:rgba(10,26,45,.92);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
     }
-    .login-logo{ font-family:'Orbitron',sans-serif; font-size:2rem; color:#66c7ff; margin-bottom:8px; }
-    .login-sub{ color:var(--muted); margin-bottom:20px; line-height:1.5; }
 
-    /* Form Elements */
-    .field{ margin-bottom:14px; }
-    .field label{ display:block; font-size:.92rem; font-weight:600; margin-bottom:8px; color:#dceeff; }
-    .field input, .field select, .field textarea{
-      width:100%; border:1px solid var(--line); background:#081524; color:#fff;
-      border-radius:14px; padding:12px 14px; font-size:.95rem; outline:none; transition:.2s ease; font-family:inherit;
+    .login-logo{
+      font-family:'Orbitron',sans-serif;
+      font-size:2rem;
+      color:#66c7ff;
+      margin-bottom:8px;
     }
-    .field input:focus{ border-color:#2b9cff; box-shadow:0 0 0 4px rgba(30,144,255,.12); }
 
-    /* Buttons */
-    .btn{ border:none; border-radius:14px; padding:12px 16px; cursor:pointer; font-weight:700; transition:.2s ease; font-family:inherit; white-space:nowrap; }
-    .btn:hover{ transform:translateY(-1px); }
-    .btn-primary{ background:linear-gradient(135deg, var(--blue), var(--blue-2)); color:#fff; }
-    .btn-green{ background:linear-gradient(135deg, var(--green), var(--green-2)); color:#03130c; }
-    .btn-secondary{ background:#0d1b2c; border:1px solid var(--line); color:#fff; }
-    .btn-danger{ background:#1b1014; border:1px solid rgba(239,83,80,.28); color:#ffd4d3; }
+    .login-sub{
+      color:var(--muted);
+      margin-bottom:20px;
+      line-height:1.5;
+    }
 
-    /* App Layout */
-    .app{ display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      font-size:.92rem;
+      font-weight:600;
+      margin-bottom:8px;
+      color:#dceeff;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#081524;
+      color:#fff;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:.95rem;
+      outline:none;
+      transition:.2s ease;
+      font-family:inherit;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:#2b9cff;
+      box-shadow:0 0 0 4px rgba(30,144,255,.12);
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 16px;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s ease;
+      font-family:inherit;
+      white-space:nowrap;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue), var(--blue-2));
+      color:#fff;
+    }
+
+    .btn-green{
+      background:linear-gradient(135deg, var(--green), var(--green-2));
+      color:#03130c;
+    }
+
+    .btn-secondary{
+      background:#0d1b2c;
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .btn-danger{
+      background:#1b1014;
+      border:1px solid rgba(239,83,80,.28);
+      color:#ffd4d3;
+    }
+
+    .login-status,
+    .status-msg{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:.92rem;
+      min-height:20px;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      min-height:100vh;
+    }
+
     .sidebar{
       background:linear-gradient(180deg, #04101c 0%, #051221 100%);
-      border-right:1px solid rgba(255,255,255,.06); padding:24px 18px;
-      display:flex; flex-direction:column; justify-content:space-between; position:sticky; top:0; height:100vh;
+      border-right:1px solid rgba(255,255,255,.06);
+      padding:24px 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      height:100vh;
     }
-    .brand img{ width:190px; filter:drop-shadow(0 0 10px rgba(30,144,255,.25)); }
+
+    .brand{
+      margin-bottom:28px;
+    }
+
+    .brand img{
+      width:190px;
+      max-width:100%;
+      display:block;
+      filter:drop-shadow(0 0 10px rgba(30,144,255,.25));
+    }
+
+    .nav{
+      display:grid;
+      gap:8px;
+    }
+
     .nav-item{
-      display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px;
-      color:#d7e8fb; text-decoration:none; font-weight:600; margin-bottom:4px; transition:.2s;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 14px;
+      border-radius:14px;
+      color:#d7e8fb;
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid transparent;
+      transition:.2s ease;
     }
-    .nav-item:hover, .nav-item.active{ background:#0a1a2c; border:1px solid rgba(255,255,255,.04); }
-    .nav-item.active{ background:linear-gradient(135deg, #0c4fb8, #0b69d1); color:#fff; }
 
-    .main{ padding:24px; }
-    .topbar{ display:flex; justify-content:space-between; margin-bottom:18px; }
-    .title-box h1{ font-family:'Orbitron',sans-serif; color:#e8f6ff; }
+    .nav-item:hover{
+      background:#0a1a2c;
+      border-color:rgba(255,255,255,.04);
+    }
 
-    /* Stats Cards */
-    .stats{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-bottom:18px; }
-    .stat{ background:#0b1b2f; border:1px solid var(--line); border-radius:20px; padding:18px; position:relative; }
-    .stat-value{ font-family:'Orbitron',sans-serif; font-size:2rem; }
+    .nav-item.active{
+      background:linear-gradient(135deg, #0c4fb8, #0b69d1);
+      color:#fff;
+      box-shadow:0 8px 22px rgba(11,105,209,.25);
+    }
 
-    /* Filter & Table */
-    .filters-card{ background:#0a1b2f; border:1px solid var(--line); border-radius:24px; padding:18px; margin-bottom:18px; }
-    .filters-grid{ display:grid; grid-template-columns:1.4fr .8fr auto auto; gap:12px; }
-    .quick-filters{ display:flex; gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.06); }
-    .quick-btn{ background:#0d1b2c; border:1px solid var(--line); color:#fff; padding:8px 12px; border-radius:10px; cursor:pointer; }
-    .quick-btn.active{ background:var(--blue); }
+    .nav-icon{
+      width:18px;
+      height:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      opacity:.95;
+    }
 
-    .table-card{ background:#0a1b2f; border:1px solid var(--line); border-radius:24px; overflow:hidden; }
-    table{ width:100%; border-collapse:collapse; min-width:1000px; }
-    thead th{ padding:16px; color:var(--muted); text-align:left; border-bottom:1px solid var(--line); }
-    tbody td{ padding:14px; border-bottom:1px solid rgba(255,255,255,.05); }
+    .support-box{
+      margin-top:24px;
+      background:#081726;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
 
-    /* Status Pills */
-    .status-pill{ padding:6px 12px; border-radius:20px; font-size:.8rem; font-weight:bold; cursor:pointer; border:1px solid transparent; }
-    .status-novo{ background:rgba(30,144,255,.1); color:#6bc5ff; }
-    .status-contato{ background:rgba(246,196,69,.1); color:#ffd86c; }
-    .status-fechado{ background:rgba(22,199,132,.1); color:#57e9ab; }
-    .status-perdido{ background:rgba(239,83,80,.1); color:#ff9d9b; }
+    .support-box h4{
+      font-size:1rem;
+      margin-bottom:6px;
+    }
 
-    .status-dropdown{ position:absolute; background:#0b1b2f; border:1px solid var(--line); border-radius:12px; padding:8px; z-index:100; display:grid; gap:4px; }
-    .status-option{ background:transparent; color:#fff; border:none; padding:8px; text-align:left; cursor:pointer; border-radius:6px; }
-    .status-option:hover{ background:var(--line); }
+    .support-box p{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.5;
+      margin-bottom:12px;
+    }
 
-    .whatsIconBtn{ background:var(--green); border:none; border-radius:10px; padding:8px; cursor:pointer; font-size:1.2rem; }
-    .status-msg{ position:fixed; bottom:20px; right:20px; background:var(--blue); padding:10px 20px; border-radius:10px; z-index:1000; display:none; }
+    .support-box .btn{
+      width:100%;
+    }
 
-    @media (max-width:980px){ .app{ grid-template-columns:1fr; } .sidebar{ display:none; } }
+    .side-footer{
+      margin-top:20px;
+      font-size:.82rem;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .main{
+      padding:24px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .title-box h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(1.7rem, 3vw, 2.8rem);
+      color:#e8f6ff;
+      margin-bottom:8px;
+    }
+
+    .title-box p{
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .top-actions .btn{
+      min-width:120px;
+      padding:12px 18px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(180px,1fr));
+      gap:14px;
+      margin-bottom:18px;
+      scroll-margin-top:20px;
+    }
+
+    .stat{
+      background:linear-gradient(180deg, #0b1b2f 0%, #091729 100%);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .stat::after{
+      content:'';
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:4px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.06));
+    }
+
+    .stat.blue::after{ background:linear-gradient(90deg, #1e90ff, #58b8ff); }
+    .stat.yellow::after{ background:linear-gradient(90deg, #f6c445, #ffd86c); }
+    .stat.green::after{ background:linear-gradient(90deg, #16c784, #3ee39e); }
+
+    .stat-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .stat-label{
+      color:#a4bfdb;
+      font-size:.95rem;
+    }
+
+    .stat-icon{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .stat-value{
+      font-family:'Orbitron',sans-serif;
+      font-size:2rem;
+      color:#fff;
+      line-height:1.1;
+    }
+
+    .stat-sub{
+      color:var(--muted);
+      font-size:.88rem;
+      margin-top:8px;
+    }
+
+    .filters-card{
+      background:linear-gradient(180deg, #0a1b2f 0%, #09182b 100%);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .filters-grid{
+      display:grid;
+      grid-template-columns:1.4fr .8fr auto auto;
+      gap:12px;
+    }
+
+    .filters-grid input,
+    .filters-grid select{
+      width:100%;
+      border:1px solid var(--line);
+      background:#081524;
+      color:#fff;
+      border-radius:14px;
+      padding:13px 14px;
+      font-size:.95rem;
+      outline:none;
+      font-family:inherit;
+    }
+
+    .filters-grid input::placeholder{
+      color:#8aa6c4;
+    }
+
+    .quick-filters{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    .quick-label{
+      color:#a9c7e5;
+      font-size:.92rem;
+      display:flex;
+      align-items:center;
+      padding-right:4px;
+    }
+
+    .quick-btn{
+      background:#0d1b2c;
+      border:1px solid var(--line);
+      color:#e9f4ff;
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:700;
+      font-family:inherit;
+    }
+
+    .quick-btn.active{
+      background:linear-gradient(135deg, #0c4fb8, #0b69d1);
+      border-color:transparent;
+    }
+
+    .table-card{
+      background:linear-gradient(180deg, #0a1b2f 0%, #09182b 100%);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      scroll-margin-top:20px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1220px;
+    }
+
+    thead th{
+      text-align:center;
+      font-size:.83rem;
+      color:#a9c7e5;
+      font-weight:700;
+      letter-spacing:.3px;
+      padding:16px 14px;
+      background:rgba(255,255,255,.02);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+
+    tbody td{
+      padding:14px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;
+      text-align:center;
+      font-size:.94rem;
+      color:#eef6ff;
+    }
+
+    tbody tr:hover{
+      background:rgba(255,255,255,.02);
+    }
+
+    .lead-name{
+      font-weight:700;
+      color:#fff;
+      margin-bottom:4px;
+      text-align:center;
+    }
+
+    .lead-sub{
+      color:var(--muted);
+      font-size:.86rem;
+      text-align:center;
+    }
+
+    .status-inline{
+      position:relative;
+      display:inline-block;
+      margin:0 auto;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.2px;
+      width:max-content;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .status-novo{
+      background:rgba(30,144,255,.14);
+      color:#6bc5ff;
+      border-color:rgba(30,144,255,.20);
+    }
+
+    .status-contato{
+      background:rgba(246,196,69,.14);
+      color:#ffd86c;
+      border-color:rgba(246,196,69,.20);
+    }
+
+    .status-fechado{
+      background:rgba(22,199,132,.14);
+      color:#57e9ab;
+      border-color:rgba(22,199,132,.20);
+    }
+
+    .status-perdido{
+      background:rgba(239,83,80,.14);
+      color:#ff9d9b;
+      border-color:rgba(239,83,80,.20);
+    }
+
+    .status-dropdown{
+      position:absolute;
+      top:44px;
+      left:0;
+      min-width:150px;
+      background:#0b1b2f;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:0 18px 35px rgba(0,0,0,.28);
+      padding:8px;
+      display:grid;
+      gap:6px;
+      z-index:20;
+      text-align:left;
+    }
+
+    .status-option{
+      border:none;
+      background:#081524;
+      color:#eef6ff;
+      border-radius:10px;
+      padding:10px 12px;
+      text-align:left;
+      cursor:pointer;
+      font-family:inherit;
+      font-weight:600;
+    }
+
+    .status-option:hover{
+      background:#10243d;
+    }
+
+    .obs-box,
+    .row-actions{
+      display:grid;
+      gap:8px;
+      justify-items:center;
+    }
+
+    .obs-box textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#081524;
+      color:#fff;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:.92rem;
+      font-family:inherit;
+      outline:none;
+      min-height:64px;
+      resize:vertical;
+      text-align:left;
+    }
+
+    .whatsIconBtn{
+      width:42px;
+      height:42px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(135deg, var(--green), var(--green-2));
+      color:#03130c;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(22,199,132,.22);
+    }
+
+    .btn-icon{
+      font-size:1.1rem;
+      line-height:1;
+    }
+
+    .table-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:16px 18px;
+      border-top:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .pagination{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .page-btn{
+      width:36px;
+      height:36px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#0d1b2c;
+      color:#dceeff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .page-btn.active{
+      background:linear-gradient(135deg, var(--blue), var(--blue-2));
+      border-color:transparent;
+      color:#fff;
+    }
+
+    .insights{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(200px,1fr));
+      gap:14px;
+      margin-top:18px;
+      scroll-margin-top:20px;
+    }
+
+    .insight{
+      background:linear-gradient(180deg, #0a1b2f 0%, #09182b 100%);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .insight h4{
+      font-size:1rem;
+      margin-bottom:8px;
+      color:#eff7ff;
+    }
+
+    .insight p{
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.92rem;
+    }
+
+    .empty{
+      display:none;
+      padding:26px 12px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    @media (max-width:1200px){
+      .stats{
+        grid-template-columns:repeat(2, minmax(180px,1fr));
+      }
+      .filters-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .insights{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:980px){
+      .app{
+        grid-template-columns:1fr;
+      }
+      .sidebar{
+        display:none;
+      }
+    }
+
+    @media (max-width:700px){
+      body{
+        padding:0;
+      }
+      .main{
+        padding:14px;
+      }
+      .stats{
+        grid-template-columns:1fr;
+      }
+      .filters-grid{
+        grid-template-columns:1fr;
+      }
+      .login-wrap{
+        padding:16px;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <div id="statusMsg" class="status-msg"></div>
-
   <div id="loginSection" class="login-wrap">
     <div class="login-card">
-      <div class="login-logo">ViaTec Admin</div>
-      <div class="login-sub">Acesse o gerenciador de leads.</div>
+      <div class="login-logo">Painel ViaTec</div>
+      <div class="login-sub">Entre com seu usuário administrador para acessar os leads captados.</div>
+
       <div class="field">
-        <label>E-mail</label>
-        <input type="email" id="loginEmail" placeholder="admin@viatec.com.br">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" placeholder="Seu e-mail de admin">
       </div>
+
       <div class="field">
-        <label>Senha</label>
-        <input type="password" id="loginPassword" placeholder="••••••••">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" placeholder="Sua senha">
       </div>
-      <button class="btn btn-primary" id="loginBtn" style="width:100%">Entrar no Painel</button>
-      <div id="loginStatus" style="color:var(--red); margin-top:10px; font-size:.9rem;"></div>
+
+      <button class="btn btn-primary" id="loginBtn">Entrar</button>
+      <div class="login-status" id="loginStatus"></div>
     </div>
   </div>
 
   <div id="adminSection" class="app hidden">
     <aside class="sidebar">
       <div>
-        <div class="brand"><img src="logo-viatec.png" alt="ViaTec"></div>
+        <div class="brand">
+          <img src="logo-viatec.png" alt="ViaTec">
+        </div>
+
         <nav class="nav">
-          <a class="nav-item active" href="#"><span class="nav-icon">▦</span> Dashboard</a>
-          <a class="nav-item" href="#leads"><span class="nav-icon">◎</span> Leads</a>
-          <a class="nav-item" href="#exportacoes"><span class="nav-icon">⇪</span> Exportar</a>
+          <a class="nav-item active" href="#dashboard" data-target="dashboard"><span class="nav-icon">▦</span> Dashboard</a>
+          <a class="nav-item" href="#leads" data-target="leads"><span class="nav-icon">◎</span> Leads</a>
+          <a class="nav-item" href="#estatisticas" data-target="estatisticas"><span class="nav-icon">◫</span> Estatísticas</a>
+          <a class="nav-item" href="#exportacoes" data-target="exportacoes"><span class="nav-icon">⇪</span> Exportações</a>
+          <a class="nav-item" href="#configuracoes" data-target="configuracoes"><span class="nav-icon">⚙</span> Configurações</a>
         </nav>
       </div>
-      <div class="side-footer"><strong>ViaTec Telecom</strong><br>© 2026</div>
+
+      <div>
+        <div class="support-box">
+          <h4>Suporte</h4>
+          <p>Dúvidas ou problemas? Organize e acompanhe seus leads com mais rapidez.</p>
+          <button class="btn btn-primary">Entrar em contato</button>
+        </div>
+
+        <div class="side-footer">
+          <strong>ViaTec Telecom</strong><br>
+          © 2026 Todos os direitos reservados.
+        </div>
+      </div>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <div class="title-box">
-          <h1>Painel de Leads</h1>
-          <p>Gestão de capturas da roleta promocional.</p>
+          <h1>Painel ViaTec</h1>
+          <p>Leads captados na roleta promocional.</p>
         </div>
+
         <div class="top-actions">
           <button class="btn btn-secondary" id="refreshBtn">Atualizar</button>
+          <button class="btn btn-green" id="exportBtn">Exportar CSV</button>
           <button class="btn btn-danger" id="logoutBtn">Sair</button>
         </div>
       </div>
 
-      <section class="stats">
-        <div class="stat"><div class="stat-label">Total</div><div class="stat-value" id="cardTotal">0</div></div>
-        <div class="stat"><div class="stat-label">Novos</div><div class="stat-value" id="cardNovos">0</div></div>
-        <div class="stat"><div class="stat-label">Em Aberto</div><div class="stat-value" id="cardContato">0</div></div>
-        <div class="stat"><div class="stat-label">Fechados</div><div class="stat-value" id="cardFechados">0</div></div>
+      <section id="dashboard" class="stats">
+        <div class="stat blue">
+          <div class="stat-top">
+            <div class="stat-label">Total de leads</div>
+            <div class="stat-icon">👥</div>
+          </div>
+          <div class="stat-value" id="cardTotal">0</div>
+          <div class="stat-sub">Todos os tempos</div>
+        </div>
+
+        <div class="stat blue">
+          <div class="stat-top">
+            <div class="stat-label">Novos</div>
+            <div class="stat-icon">🆕</div>
+          </div>
+          <div class="stat-value" id="cardNovos">0</div>
+          <div class="stat-sub">Ainda não contatados</div>
+        </div>
+
+        <div class="stat yellow">
+          <div class="stat-top">
+            <div class="stat-label">Iniciados</div>
+            <div class="stat-icon">📞</div>
+          </div>
+          <div class="stat-value" id="cardContato">0</div>
+          <div class="stat-sub">Atendimento iniciado</div>
+        </div>
+
+        <div class="stat green">
+          <div class="stat-top">
+            <div class="stat-label">Fechados</div>
+            <div class="stat-icon">✅</div>
+          </div>
+          <div class="stat-value" id="cardFechados">0</div>
+          <div class="stat-sub">Conversões registradas</div>
+        </div>
       </section>
 
       <section class="filters-card">
         <div class="filters-grid">
-          <input type="text" id="searchInput" placeholder="Buscar por nome, telefone ou prêmio...">
+          <input type="text" id="searchInput" placeholder="Buscar por nome, telefone, cidade, prêmio ou observação">
           <select id="statusFilter">
             <option value="">Todos os status</option>
             <option value="Novo">Novo</option>
@@ -181,19 +830,22 @@
             <option value="Fechado">Fechado</option>
             <option value="Perdido">Perdido</option>
           </select>
-          <button class="btn btn-secondary" id="clearFiltersBtn">Limpar</button>
-          <button class="btn btn-green" id="exportBtn">Exportar CSV</button>
+          <button class="btn btn-secondary" id="clearFiltersBtn">Limpar filtros</button>
+          <button class="btn btn-primary" id="reloadBtn">Recarregar</button>
         </div>
+
         <div class="quick-filters">
+          <div class="quick-label">Filtros rápidos:</div>
           <button class="quick-btn active" data-status="">Todos</button>
           <button class="quick-btn" data-status="Novo">Novos</button>
           <button class="quick-btn" data-status="Iniciado">Iniciados</button>
           <button class="quick-btn" data-status="Fechado">Fechados</button>
+          <button class="quick-btn" data-status="Perdido">Perdidos</button>
         </div>
       </section>
 
-      <section class="table-card">
-        <div style="overflow-x: auto;">
+      <section id="leads" class="table-card">
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
@@ -201,6 +853,7 @@
                 <th>Telefone</th>
                 <th>Cidade</th>
                 <th>Prêmio</th>
+                <th>Data</th>
                 <th>Status</th>
                 <th>Observações</th>
                 <th>Ações</th>
@@ -208,8 +861,68 @@
             </thead>
             <tbody id="leadsBody"></tbody>
           </table>
+          <div class="empty" id="emptyMsg">Nenhum lead encontrado.</div>
         </div>
-        <div id="emptyMsg" class="hidden" style="padding:40px; text-align:center; color:var(--muted);">Nenhum lead encontrado.</div>
+
+        <div class="table-footer">
+          <div id="footerCount">Mostrando 0 lead(s).</div>
+          <div class="pagination">
+            <button class="page-btn">‹</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="status-msg" id="statusMsg"></div>
+
+      <section id="estatisticas" class="insights">
+        <div class="insight">
+          <h4>Responda rápido</h4>
+          <p>Leads novos aparecem primeiro. Quanto mais rápido o contato, maior a chance de conversão.</p>
+        </div>
+        <div class="insight">
+          <h4>Dica de ouro</h4>
+          <p>Use as observações para anotar detalhes importantes sobre cada lead e o histórico do atendimento.</p>
+        </div>
+        <div class="insight">
+          <h4>Acompanhe resultados</h4>
+          <p>Mantenha status atualizados para acompanhar o desempenho do time comercial com mais clareza.</p>
+        </div>
+      </section>
+
+      <section id="exportacoes" class="insights">
+        <div class="insight">
+          <h4>Exportação de leads</h4>
+          <p>Baixe todos os leads cadastrados em CSV para trabalhar no Excel ou compartilhar com o comercial.</p>
+          <button class="btn btn-green" id="exportBtnSecondary">Exportar CSV</button>
+        </div>
+        <div class="insight">
+          <h4>Atualização manual</h4>
+          <p>Use o botão de atualizar para recarregar os leads mais recentes direto do Supabase.</p>
+          <button class="btn btn-secondary" id="refreshBtnSecondary">Atualizar agora</button>
+        </div>
+        <div class="insight">
+          <h4>Controle comercial</h4>
+          <p>Filtre por status para identificar quem ainda precisa ser contatado e quem já converteu.</p>
+        </div>
+      </section>
+
+      <section id="configuracoes" class="insights">
+        <div class="insight">
+          <h4>Configurações do painel</h4>
+          <p>Este ambiente é protegido por login e conectado ao banco de leads do evento.</p>
+        </div>
+        <div class="insight">
+          <h4>Status do fluxo</h4>
+          <p>Ao clicar em WhatsApp, o lead é marcado automaticamente como <strong>Iniciado</strong>.</p>
+        </div>
+        <div class="insight">
+          <h4>Organização</h4>
+          <p>Atualize os status e mantenha observações preenchidas para dar mais clareza ao comercial.</p>
+        </div>
       </section>
     </main>
   </div>
@@ -219,156 +932,376 @@
 
     const SUPABASE_URL = "https://plkvgekbngrznillyupa.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_4g8etYpP50dsAgXZsM8nfg_Mu6roIt0";
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Seletores
     const loginSection = document.getElementById("loginSection");
     const adminSection = document.getElementById("adminSection");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginStatus = document.getElementById("loginStatus");
+
     const leadsBody = document.getElementById("leadsBody");
     const searchInput = document.getElementById("searchInput");
     const statusFilter = document.getElementById("statusFilter");
     const statusMsg = document.getElementById("statusMsg");
     const emptyMsg = document.getElementById("emptyMsg");
+    const footerCount = document.getElementById("footerCount");
+
+    const cardTotal = document.getElementById("cardTotal");
+    const cardNovos = document.getElementById("cardNovos");
+    const cardContato = document.getElementById("cardContato");
+    const cardFechados = document.getElementById("cardFechados");
 
     let todosLeads = [];
 
-    // Funções de Interface
-    function showMsg(txt) {
-      statusMsg.textContent = txt;
-      statusMsg.style.display = "block";
-      setTimeout(() => statusMsg.style.display = "none", 3000);
+    function mostrarAdmin() {
+      loginSection.classList.add("hidden");
+      adminSection.classList.remove("hidden");
     }
 
-    function mostrarAdmin() { loginSection.classList.add("hidden"); adminSection.classList.remove("hidden"); }
-    function mostrarLogin() { adminSection.classList.add("hidden"); loginSection.classList.remove("hidden"); }
-
-    // Lógica de Dados
-    async function carregarLeads() {
-      try {
-        const { data, error } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
-        if (error) throw error;
-        todosLeads = data || [];
-        atualizarStats();
-        aplicarFiltros();
-      } catch (e) { console.error(e); showMsg("Erro ao carregar dados."); }
+    function mostrarLogin() {
+      adminSection.classList.add("hidden");
+      loginSection.classList.remove("hidden");
     }
 
-    function atualizarStats() {
-      document.getElementById("cardTotal").textContent = todosLeads.length;
-      document.getElementById("cardNovos").textContent = todosLeads.filter(l => (l.status || "Novo") === "Novo").length;
-      document.getElementById("cardContato").textContent = todosLeads.filter(l => l.status === "Iniciado").length;
-      document.getElementById("cardFechados").textContent = todosLeads.filter(l => l.status === "Fechado").length;
+    function formatarData(dataIso) {
+      if (!dataIso) return "-";
+      return new Date(dataIso).toLocaleString("pt-BR");
     }
 
-    async function atualizarStatusLead(id, novoStatus) {
-      try {
-        const { error } = await supabase.from("leads").update({ status: novoStatus }).eq("id", id);
-        if (error) throw error;
-        showMsg("Status atualizado!");
-        carregarLeads();
-      } catch (e) { showMsg("Erro ao salvar."); }
+    function normalizarTelefone(telefone) {
+      return (telefone || "").replace(/\D/g, "");
     }
 
-    async function salvarObs(id, texto) {
-      await supabase.from("leads").update({ observacoes: texto }).eq("id", id);
-      showMsg("Observação salva.");
+    function gerarMensagem(nome, premio) {
+      if ((premio || "").includes("INSTALAÇÃO")) {
+        return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou instalação grátis na nossa ação promocional. Vamos ativar seu benefício?`;
+      }
+      if ((premio || "").includes("DESCONTO")) {
+        return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou um desconto especial na nossa ação promocional. Quer aproveitar esse benefício?`;
+      }
+      return `Olá ${nome}, tudo bem? Aqui é da ViaTec Telecom. Você ganhou ${premio} na nossa ação promocional. Vamos dar sequência no seu benefício?`;
     }
 
-    // Filtros e Busca
-    function aplicarFiltros() {
-      const termo = searchInput.value.toLowerCase();
-      const statusValue = statusFilter.value;
+    function abrirWhatsApp(nome, telefone, premio) {
+      const tel = normalizarTelefone(telefone);
+      if (!tel) {
+        alert("Telefone inválido.");
+        return;
+      }
 
-      const filtrados = todosLeads.filter(l => {
-        const matchesStatus = statusValue === "" || (l.status || "Novo") === statusValue;
-        const matchesSearch = [l.nome, l.telefone, l.premio, l.cidade].some(field => 
-          String(field || "").toLowerCase().includes(termo)
-        );
-        return matchesStatus && matchesSearch;
-      });
+      const telefoneCompleto = tel.startsWith("55") ? tel : `55${tel}`;
+      const mensagem = gerarMensagem(nome, premio);
+      const url = `https://wa.me/${telefoneCompleto}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, "_blank");
+    }
 
-      renderTabela(filtrados);
+    function classeStatus(status) {
+      if (status === "Iniciado") return "status-contato";
+      if (status === "Fechado") return "status-fechado";
+      if (status === "Perdido") return "status-perdido";
+      return "status-novo";
+    }
+
+    function atualizarCards(lista) {
+      const total = lista.length;
+      const novos = lista.filter(l => (l.status || "Novo") === "Novo").length;
+      const contato = lista.filter(l => l.status === "Iniciado").length;
+      const fechados = lista.filter(l => l.status === "Fechado").length;
+
+      cardTotal.textContent = total;
+      cardNovos.textContent = novos;
+      cardContato.textContent = contato;
+      cardFechados.textContent = fechados;
+    }
+
+    async function atualizarLead(id, patch) {
+      const { error } = await supabase
+        .from("leads")
+        .update(patch)
+        .eq("id", id);
+
+      if (error) throw error;
+    }
+
+    function exportarCSV(lista) {
+      if (!lista.length) {
+        alert("Não há leads para exportar.");
+        return;
+      }
+
+      const headers = ["Nome", "Email", "Telefone", "Cidade", "Premio", "Status", "Observacoes", "Data"];
+      const rows = lista.map(l => [
+        l.nome || "",
+        l.email || "",
+        l.telefone || "",
+        l.cidade || "",
+        l.premio || "",
+        l.status || "Novo",
+        l.observacoes || "",
+        l.created_at || ""
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(";"))
+        .join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "leads-viatec.csv";
+      link.click();
     }
 
     function renderTabela(lista) {
       leadsBody.innerHTML = "";
-      emptyMsg.classList.toggle("hidden", lista.length > 0);
 
-      lista.forEach(lead => {
+      if (!lista.length) {
+        emptyMsg.style.display = "block";
+        footerCount.textContent = "Mostrando 0 lead(s).";
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+      footerCount.textContent = `Mostrando ${lista.length} lead(s).`;
+
+      for (const lead of lista) {
         const tr = document.createElement("tr");
-        const status = lead.status || "Novo";
-        const classeStatus = `status-pill status-${status.toLowerCase()}`;
+        const statusAtual = lead.status || "Novo";
+        const obsAtual = lead.observacoes || "";
 
         tr.innerHTML = `
-          <td><strong>${lead.nome || 'Sem nome'}</strong><br><small>${lead.email || '-'}</small></td>
-          <td>${lead.telefone || '-'}</td>
-          <td>${lead.cidade || '-'}</td>
-          <td>${lead.premio || '-'}</td>
-          <td style="position:relative">
-            <button class="${classeStatus}" onclick="document.getElementById('drop-${lead.id}').classList.toggle('hidden')">${status}</button>
-            <div id="drop-${lead.id}" class="status-dropdown hidden">
-              <button class="status-option" data-id="${lead.id}" data-status="Novo">Novo</button>
-              <button class="status-option" data-id="${lead.id}" data-status="Iniciado">Iniciado</button>
-              <button class="status-option" data-id="${lead.id}" data-status="Fechado">Fechado</button>
-              <button class="status-option" data-id="${lead.id}" data-status="Perdido">Perdido</button>
+          <td>
+            <div class="lead-name">${lead.nome || "-"}</div>
+            <div class="lead-sub">${lead.email || "-"}</div>
+          </td>
+          <td>${lead.telefone || "-"}</td>
+          <td>${lead.cidade || "-"}</td>
+          <td>${lead.premio || "-"}</td>
+          <td>${formatarData(lead.created_at)}</td>
+          <td>
+            <div class="status-inline">
+              <button class="status-pill ${classeStatus(statusAtual)} statusToggleBtn" data-id="${lead.id}">
+                ${statusAtual}
+              </button>
+
+              <div class="status-dropdown hidden" id="status-menu-${lead.id}">
+                <button class="status-option" data-id="${lead.id}" data-status="Novo">Novo</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Iniciado">Iniciado</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Fechado">Fechado</button>
+                <button class="status-option" data-id="${lead.id}" data-status="Perdido">Perdido</button>
+              </div>
             </div>
           </td>
-          <td><textarea class="field obs-input" data-id="${lead.id}" style="min-height:50px">${lead.observacoes || ''}</textarea></td>
           <td>
-            <button class="whatsIconBtn" onclick="window.open('https://wa.me/55${String(lead.telefone).replace(/\D/g,'')}?text=Olá ${lead.nome}, vimos que você ganhou ${lead.premio}!', '_blank')">💬</button>
+            <div class="obs-box">
+              <textarea data-id="${lead.id}" class="obsInput" placeholder="Anotações...">${obsAtual}</textarea>
+            </div>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="whatsIconBtn whatsBtn" data-id="${lead.id}" data-nome="${encodeURIComponent(lead.nome || "")}" data-tel="${encodeURIComponent(lead.telefone || "")}" data-premio="${encodeURIComponent(lead.premio || "")}" title="Abrir WhatsApp">
+                <span class="btn-icon">💬</span>
+              </button>
+            </div>
           </td>
         `;
+
         leadsBody.appendChild(tr);
+      }
+
+      document.querySelectorAll(".whatsBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const nome = decodeURIComponent(btn.dataset.nome);
+          const tel = decodeURIComponent(btn.dataset.tel);
+          const premio = decodeURIComponent(btn.dataset.premio);
+
+          abrirWhatsApp(nome, tel, premio);
+
+          try {
+            await atualizarLead(id, { status: "Iniciado" });
+            await carregarLeads();
+            statusMsg.textContent = "Lead marcado como Iniciado.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao atualizar status do lead.";
+          }
+        });
       });
 
-      // Eventos internos da tabela
+      document.querySelectorAll(".obsInput").forEach(textarea => {
+        textarea.addEventListener("blur", async () => {
+          const id = textarea.dataset.id;
+
+          try {
+            statusMsg.textContent = "Salvando observação...";
+            await atualizarLead(id, { observacoes: textarea.value });
+            statusMsg.textContent = "Observação salva.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao salvar observação.";
+          }
+        });
+      });
+
+      document.querySelectorAll(".statusToggleBtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          const id = btn.dataset.id;
+          const menu = document.getElementById(`status-menu-${id}`);
+
+          document.querySelectorAll(".status-dropdown").forEach(drop => {
+            if (drop !== menu) drop.classList.add("hidden");
+          });
+
+          menu.classList.toggle("hidden");
+        });
+      });
+
       document.querySelectorAll(".status-option").forEach(btn => {
-        btn.onclick = () => atualizarStatusLead(btn.dataset.id, btn.dataset.status);
-      });
-      document.querySelectorAll(".obs-input").forEach(area => {
-        area.onblur = () => salvarObs(area.dataset.id, area.value);
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          const novoStatus = btn.dataset.status;
+
+          try {
+            statusMsg.textContent = "Atualizando status...";
+            await atualizarLead(id, { status: novoStatus });
+            await carregarLeads();
+            statusMsg.textContent = "Status atualizado.";
+          } catch (error) {
+            console.error(error);
+            statusMsg.textContent = "Erro ao atualizar status.";
+          }
+        });
       });
     }
 
-    // Exportar CSV
-    function exportar() {
-      let csv = "Nome;Telefone;Cidade;Premio;Status;Obs\n";
-      todosLeads.forEach(l => {
-        csv += `${l.nome};${l.telefone};${l.cidade};${l.premio};${l.status || 'Novo'};${l.observacoes || ''}\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'leads_viatec.csv';
-      a.click();
+    function aplicarFiltro() {
+      const termo = searchInput.value.trim().toLowerCase();
+      const status = statusFilter.value;
+
+      let lista = [...todosLeads];
+
+      if (termo) {
+        lista = lista.filter((lead) =>
+          (lead.nome || "").toLowerCase().includes(termo) ||
+          (lead.email || "").toLowerCase().includes(termo) ||
+          (lead.telefone || "").toLowerCase().includes(termo) ||
+          (lead.cidade || "").toLowerCase().includes(termo) ||
+          (lead.premio || "").toLowerCase().includes(termo) ||
+          (lead.observacoes || "").toLowerCase().includes(termo)
+        );
+      }
+
+      if (status) {
+        lista = lista.filter((lead) => (lead.status || "Novo") === status);
+      }
+
+      renderTabela(lista);
+      atualizarCards(lista);
     }
 
-    // Eventos Globais
-    document.getElementById("loginBtn").onclick = () => {
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPassword").value;
-      if(email && pass) { mostrarAdmin(); carregarLeads(); }
-      else { document.getElementById("loginStatus").textContent = "Informe os dados de acesso."; }
-    };
+    async function carregarLeads() {
+      statusMsg.textContent = "Carregando leads...";
 
-    document.getElementById("logoutBtn").onclick = mostrarLogin;
-    document.getElementById("refreshBtn").onclick = carregarLeads;
-    document.getElementById("exportBtn").onclick = exportar;
-    document.getElementById("clearFiltersBtn").onclick = () => { searchInput.value = ""; statusFilter.value = ""; aplicarFiltros(); };
+      const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    searchInput.oninput = aplicarFiltros;
-    statusFilter.onchange = aplicarFiltros;
+      if (error) {
+        console.error(error);
+        statusMsg.textContent = "Erro ao carregar leads.";
+        return;
+      }
+
+      todosLeads = data || [];
+      aplicarFiltro();
+      statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
+    }
+
+    async function login() {
+      loginStatus.textContent = "Entrando...";
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: loginEmail.value.trim(),
+        password: loginPassword.value
+      });
+
+      if (error) {
+        loginStatus.textContent = "E-mail ou senha inválidos.";
+        return;
+      }
+
+      loginStatus.textContent = "";
+      mostrarAdmin();
+      await carregarLeads();
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      mostrarLogin();
+      loginPassword.value = "";
+      statusMsg.textContent = "";
+    }
+
+    loginBtn.addEventListener("click", login);
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+    document.getElementById("refreshBtn").addEventListener("click", carregarLeads);
+    document.getElementById("reloadBtn").addEventListener("click", carregarLeads);
+    document.getElementById("refreshBtnSecondary").addEventListener("click", carregarLeads);
+    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(todosLeads));
+    document.getElementById("exportBtnSecondary").addEventListener("click", () => exportarCSV(todosLeads));
+
+    document.getElementById("clearFiltersBtn").addEventListener("click", () => {
+      searchInput.value = "";
+      statusFilter.value = "";
+      document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("active"));
+      document.querySelector('.quick-btn[data-status=""]').classList.add("active");
+      aplicarFiltro();
+    });
 
     document.querySelectorAll(".quick-btn").forEach(btn => {
-      btn.onclick = () => {
+      btn.addEventListener("click", () => {
         document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         statusFilter.value = btn.dataset.status;
-        aplicarFiltros();
-      };
+        aplicarFiltro();
+      });
     });
 
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach(nav => nav.classList.remove("active"));
+        item.classList.add("active");
+      });
+    });
+
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".status-dropdown").forEach(drop => {
+        drop.classList.add("hidden");
+      });
+    });
+
+    searchInput.addEventListener("input", aplicarFiltro);
+    statusFilter.addEventListener("change", () => {
+      document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("active"));
+      const current = document.querySelector(`.quick-btn[data-status="${statusFilter.value}"]`);
+      if (current) current.classList.add("active");
+      aplicarFiltro();
+    });
+
+    const { data: authData } = await supabase.auth.getSession();
+    if (authData.session) {
+      mostrarAdmin();
+      await carregarLeads();
+    } else {
+      mostrarLogin();
+    }
   </script>
 </body>
 </html>
