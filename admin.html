@@ -1160,30 +1160,30 @@
     }
 
     async function ativarCampanha(id) {
-      try {
-        statusMsg.textContent = "Ativando campanha...";
+  try {
+    statusMsg.textContent = "Ativando campanha...";
 
-        const { error: error1 } = await supabase
-          .from("campanhas")
-          .update({ ativa: false })
-          .neq("id", "");
+    const { error } = await supabase
+      .from("campanhas")
+      .update({ ativa: false })
+      .neq("id", id);
 
-        if (error1) throw error1;
+    if (error) throw error;
 
-        const { error: error2 } = await supabase
-          .from("campanhas")
-          .update({ ativa: true })
-          .eq("id", id);
+    const { error: error2 } = await supabase
+      .from("campanhas")
+      .update({ ativa: true })
+      .eq("id", id);
 
-        if (error2) throw error2;
+    if (error2) throw error2;
 
-        statusMsg.textContent = "Campanha ativada com sucesso.";
-        await carregarTudo();
-      } catch (error) {
-        console.error(error);
-        statusMsg.textContent = "Erro ao ativar campanha.";
-      }
-    }
+    statusMsg.textContent = "Campanha ativada com sucesso.";
+    await carregarTudo();
+  } catch (error) {
+    console.error("Erro ao ativar campanha:", error);
+    statusMsg.textContent = error.message || "Erro ao ativar campanha.";
+  }
+}
 
     function exportarCSV(lista) {
       if (!lista.length) {
