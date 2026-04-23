@@ -700,6 +700,54 @@
       font-size:.92rem;
     }
 
+    .campaign-manager{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .campaign-list{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .campaign-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:12px;
+      border-radius:14px;
+      background:#081524;
+      border:1px solid var(--line);
+    }
+
+    .campaign-name{
+      font-weight:700;
+      color:#fff;
+    }
+
+    .campaign-meta{
+      font-size:.86rem;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .campaign-active{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:700;
+      color:#6cf2b8;
+      background:rgba(22,199,132,.12);
+      border:1px solid rgba(22,199,132,.22);
+    }
+
     .empty{
       display:none;
       padding:26px 12px;
@@ -949,13 +997,20 @@
           <h4>Configurações do painel</h4>
           <p>Este ambiente é protegido por login e conectado ao banco de leads e campanhas do evento.</p>
         </div>
+
         <div class="insight">
           <h4>Status do fluxo</h4>
           <p>Ao clicar em WhatsApp, o lead é marcado automaticamente como <strong>Iniciado</strong>.</p>
         </div>
+
         <div class="insight">
-          <h4>Organização</h4>
-          <p>Com campanhas separadas, você não precisa apagar dados antigos para começar uma nova feira.</p>
+          <h4>Gerenciar Campanhas</h4>
+          <div class="campaign-manager">
+            <input type="text" id="novaCampanhaNome" placeholder="Nome da nova campanha">
+            <textarea id="novaCampanhaDescricao" placeholder="Descrição da campanha (opcional)"></textarea>
+            <button class="btn btn-primary" id="createCampaignBtn">Criar campanha</button>
+          </div>
+          <div class="campaign-list" id="listaCampanhas"></div>
         </div>
       </section>
     </main>
@@ -988,6 +1043,11 @@
     const cardNovos = document.getElementById("cardNovos");
     const cardContato = document.getElementById("cardContato");
     const cardFechados = document.getElementById("cardFechados");
+
+    const novaCampanhaNome = document.getElementById("novaCampanhaNome");
+    const novaCampanhaDescricao = document.getElementById("novaCampanhaDescricao");
+    const createCampaignBtn = document.getElementById("createCampaignBtn");
+    const listaCampanhas = document.getElementById("listaCampanhas");
 
     let todosLeads = [];
     let todasCampanhas = [];
@@ -1068,6 +1128,63 @@
       if (error) throw error;
     }
 
+    async function criarCampanha() {
+      const nome = novaCampanhaNome.value.trim();
+      const descricao = novaCampanhaDescricao.value.trim();
+
+      if (!nome) {
+        alert("Digite o nome da campanha.");
+        return;
+      }
+
+      statusMsg.textContent = "Criando campanha...";
+
+      const { error } = await supabase
+        .from("campanhas")
+        .insert([{
+          nome,
+          descricao,
+          ativa: false
+        }]);
+
+      if (error) {
+        console.error(error);
+        statusMsg.textContent = "Erro ao criar campanha.";
+        return;
+      }
+
+      novaCampanhaNome.value = "";
+      novaCampanhaDescricao.value = "";
+      statusMsg.textContent = "Campanha criada com sucesso.";
+      await carregarTudo();
+    }
+
+    async function ativarCampanha(id) {
+      try {
+        statusMsg.textContent = "Ativando campanha...";
+
+        const { error: error1 } = await supabase
+          .from("campanhas")
+          .update({ ativa: false })
+          .neq("id", "");
+
+        if (error1) throw error1;
+
+        const { error: error2 } = await supabase
+          .from("campanhas")
+          .update({ ativa: true })
+          .eq("id", id);
+
+        if (error2) throw error2;
+
+        statusMsg.textContent = "Campanha ativada com sucesso.";
+        await carregarTudo();
+      } catch (error) {
+        console.error(error);
+        statusMsg.textContent = "Erro ao ativar campanha.";
+      }
+    }
+
     function exportarCSV(lista) {
       if (!lista.length) {
         alert("Não há leads para exportar.");
@@ -1099,6 +1216,7 @@
     }
 
     function preencherFiltroCampanhas() {
+      const valorAtual = campaignFilter.value;
       campaignFilter.innerHTML = `<option value="">Todas as campanhas</option>`;
 
       for (const campanha of todasCampanhas) {
@@ -1107,6 +1225,48 @@
         option.textContent = campanha.nome;
         campaignFilter.appendChild(option);
       }
+
+      if ([...campaignFilter.options].some(opt => opt.value === valorAtual)) {
+        campaignFilter.value = valorAtual;
+      }
+    }
+
+    function renderListaCampanhas() {
+      listaCampanhas.innerHTML = "";
+
+      if (!todasCampanhas.length) {
+        listaCampanhas.innerHTML = `<div class="campaign-meta">Nenhuma campanha cadastrada.</div>`;
+        return;
+      }
+
+      for (const campanha of todasCampanhas) {
+        const div = document.createElement("div");
+        div.className = "campaign-item";
+
+        div.innerHTML = `
+          <div>
+            <div class="campaign-name">${campanha.nome}</div>
+            <div class="campaign-meta">
+              ${campanha.descricao ? campanha.descricao : "Sem descrição"}
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            ${campanha.ativa ? `<span class="campaign-active">● Ativa</span>` : ""}
+            <button class="btn btn-secondary activateCampaignBtn" data-id="${campanha.id}">
+              ${campanha.ativa ? "Ativa" : "Ativar"}
+            </button>
+          </div>
+        `;
+
+        listaCampanhas.appendChild(div);
+      }
+
+      document.querySelectorAll(".activateCampaignBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          await ativarCampanha(id);
+        });
+      });
     }
 
     function renderTabela(lista) {
@@ -1245,7 +1405,7 @@
       });
     }
 
-    function aplicarFiltro() {
+    function getListaFiltrada() {
       const termo = searchInput.value.trim().toLowerCase();
       const status = statusFilter.value;
       const campanhaId = campaignFilter.value;
@@ -1272,6 +1432,11 @@
         lista = lista.filter((lead) => (lead.status || "Novo") === status);
       }
 
+      return lista;
+    }
+
+    function aplicarFiltro() {
+      const lista = getListaFiltrada();
       renderTabela(lista);
       atualizarCards(lista);
     }
@@ -1292,6 +1457,7 @@
       }
 
       preencherFiltroCampanhas();
+      renderListaCampanhas();
     }
 
     async function carregarLeads() {
@@ -1345,34 +1511,13 @@
     }
 
     loginBtn.addEventListener("click", login);
+    createCampaignBtn.addEventListener("click", criarCampanha);
     document.getElementById("logoutBtn").addEventListener("click", logout);
     document.getElementById("refreshBtn").addEventListener("click", carregarTudo);
     document.getElementById("reloadBtn").addEventListener("click", carregarTudo);
     document.getElementById("refreshBtnSecondary").addEventListener("click", carregarTudo);
-    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(
-      [...todosLeads].filter((lead) => {
-        const termo = searchInput.value.trim().toLowerCase();
-        const status = statusFilter.value;
-        const campanhaId = campaignFilter.value;
-
-        const bateTermo = !termo || (
-          (lead.nome || "").toLowerCase().includes(termo) ||
-          (lead.email || "").toLowerCase().includes(termo) ||
-          (lead.telefone || "").toLowerCase().includes(termo) ||
-          (lead.cidade || "").toLowerCase().includes(termo) ||
-          (lead.premio || "").toLowerCase().includes(termo) ||
-          (lead.observacoes || "").toLowerCase().includes(termo) ||
-          nomeCampanha(lead.campanha_id).toLowerCase().includes(termo)
-        );
-
-        const bateStatus = !status || (lead.status || "Novo") === status;
-        const bateCampanha = !campanhaId || (lead.campanha_id || "") === campanhaId;
-
-        return bateTermo && bateStatus && bateCampanha;
-      })
-    ));
-
-    document.getElementById("exportBtnSecondary").addEventListener("click", () => document.getElementById("exportBtn").click());
+    document.getElementById("exportBtn").addEventListener("click", () => exportarCSV(getListaFiltrada()));
+    document.getElementById("exportBtnSecondary").addEventListener("click", () => exportarCSV(getListaFiltrada()));
 
     document.getElementById("clearFiltersBtn").addEventListener("click", () => {
       searchInput.value = "";
