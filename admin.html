@@ -838,6 +838,61 @@
       border-radius:12px;
     }
 
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:999;
+    }
+
+    .modal.hidden{
+      display:none !important;
+    }
+
+    .modal-content{
+      background:#0b192b;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+      width:100%;
+      max-width:380px;
+      text-align:center;
+      box-shadow:0 20px 40px rgba(0,0,0,.4);
+      animation:fadeIn .2s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:scale(.9);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+    .modal-content h3{
+      margin-bottom:10px;
+    }
+
+    .modal-content p{
+      color:var(--muted);
+      margin-bottom:18px;
+      font-size:.92rem;
+      line-height:1.5;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
     .empty{
       display:none;
       padding:26px 12px;
@@ -1144,6 +1199,18 @@
     </main>
   </div>
 
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modalTitle">Encerrar campanha?</h3>
+      <p id="modalText">Essa ação vai parar de receber novos leads nessa campanha.</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelModal">Cancelar</button>
+        <button class="btn btn-danger" id="confirmEncerrar">Encerrar</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -1178,9 +1245,16 @@
     const listaCampanhas = document.getElementById("listaCampanhas");
     const historicoCampanhas = document.getElementById("historicoCampanhas");
 
+    const confirmModal = document.getElementById("confirmModal");
+    const cancelModal = document.getElementById("cancelModal");
+    const confirmEncerrar = document.getElementById("confirmEncerrar");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalText = document.getElementById("modalText");
+
     let todosLeads = [];
     let todasCampanhas = [];
     let campanhasMap = {};
+    let campanhaParaEncerrar = null;
 
     function mostrarAdmin() {
       loginSection.classList.add("hidden");
@@ -1419,9 +1493,15 @@
       });
 
       document.querySelectorAll(".closeCampaignBtn").forEach(btn => {
-        btn.addEventListener("click", async () => {
+        btn.addEventListener("click", () => {
           const id = btn.dataset.id;
-          await encerrarCampanha(id);
+          const nome = btn.closest(".campaign-item").querySelector(".campaign-name").textContent;
+
+          campanhaParaEncerrar = id;
+          modalTitle.textContent = "Encerrar campanha?";
+          modalText.textContent = `A campanha "${nome}" deixará de receber novos leads.`;
+
+          confirmModal.classList.remove("hidden");
         });
       });
     }
@@ -1748,6 +1828,26 @@
       aplicarFiltro();
     });
     campaignFilter.addEventListener("change", aplicarFiltro);
+
+    cancelModal.addEventListener("click", () => {
+      campanhaParaEncerrar = null;
+      confirmModal.classList.add("hidden");
+    });
+
+    confirmEncerrar.addEventListener("click", async () => {
+      if (!campanhaParaEncerrar) return;
+
+      await encerrarCampanha(campanhaParaEncerrar);
+      campanhaParaEncerrar = null;
+      confirmModal.classList.add("hidden");
+    });
+
+    confirmModal.addEventListener("click", (e) => {
+      if (e.target === confirmModal) {
+        campanhaParaEncerrar = null;
+        confirmModal.classList.add("hidden");
+      }
+    });
 
     const { data: authData } = await supabase.auth.getSession();
     if (authData.session) {
