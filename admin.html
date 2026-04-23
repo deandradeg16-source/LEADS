@@ -501,6 +501,19 @@
       max-width:220px;
     }
 
+    .history-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:700;
+      color:#ffd98b;
+      background:rgba(246,196,69,.10);
+      border:1px solid rgba(246,196,69,.20);
+    }
+
     .status-inline{
       position:relative;
       display:inline-block;
@@ -828,7 +841,7 @@
           <a class="nav-item" href="#leads"><span class="nav-icon">◎</span> Leads</a>
           <a class="nav-item" href="#estatisticas"><span class="nav-icon">◫</span> Estatísticas</a>
           <a class="nav-item" href="#exportacoes"><span class="nav-icon">⇪</span> Exportações</a>
-          <a class="nav-item" href="#configuracoes"><span class="nav-icon">⚙</span> Configurações</a>
+          <a class="nav-item" href="#configuracoes"><span class="nav-icon">⚙</span> Gerenciar Campanhas</a>
         </nav>
       </div>
 
@@ -1012,6 +1025,11 @@
           </div>
           <div class="campaign-list" id="listaCampanhas"></div>
         </div>
+
+        <div class="insight">
+          <h4>Histórico de Campanhas</h4>
+          <div id="historicoCampanhas" class="campaign-list"></div>
+        </div>
       </section>
     </main>
   </div>
@@ -1048,6 +1066,7 @@
     const novaCampanhaDescricao = document.getElementById("novaCampanhaDescricao");
     const createCampaignBtn = document.getElementById("createCampaignBtn");
     const listaCampanhas = document.getElementById("listaCampanhas");
+    const historicoCampanhas = document.getElementById("historicoCampanhas");
 
     let todosLeads = [];
     let todasCampanhas = [];
@@ -1149,7 +1168,7 @@
 
       if (error) {
         console.error(error);
-        statusMsg.textContent = "Erro ao criar campanha.";
+        statusMsg.textContent = error.message || "Erro ao criar campanha.";
         return;
       }
 
@@ -1160,30 +1179,49 @@
     }
 
     async function ativarCampanha(id) {
-  try {
-    statusMsg.textContent = "Ativando campanha...";
+      try {
+        statusMsg.textContent = "Ativando campanha...";
 
-    const { error } = await supabase
-      .from("campanhas")
-      .update({ ativa: false })
-      .neq("id", id);
+        const { error } = await supabase
+          .from("campanhas")
+          .update({ ativa: false })
+          .neq("id", id);
 
-    if (error) throw error;
+        if (error) throw error;
 
-    const { error: error2 } = await supabase
-      .from("campanhas")
-      .update({ ativa: true })
-      .eq("id", id);
+        const { error: error2 } = await supabase
+          .from("campanhas")
+          .update({ ativa: true })
+          .eq("id", id);
 
-    if (error2) throw error2;
+        if (error2) throw error2;
 
-    statusMsg.textContent = "Campanha ativada com sucesso.";
-    await carregarTudo();
-  } catch (error) {
-    console.error("Erro ao ativar campanha:", error);
-    statusMsg.textContent = error.message || "Erro ao ativar campanha.";
-  }
-}
+        statusMsg.textContent = "Campanha ativada com sucesso.";
+        await carregarTudo();
+      } catch (error) {
+        console.error("Erro ao ativar campanha:", error);
+        statusMsg.textContent = error.message || "Erro ao ativar campanha.";
+      }
+    }
+
+    async function encerrarCampanha(id) {
+      try {
+        statusMsg.textContent = "Encerrando campanha...";
+
+        const { error } = await supabase
+          .from("campanhas")
+          .update({ ativa: false })
+          .eq("id", id);
+
+        if (error) throw error;
+
+        statusMsg.textContent = "Campanha encerrada com sucesso.";
+        await carregarTudo();
+      } catch (error) {
+        console.error("Erro ao encerrar campanha:", error);
+        statusMsg.textContent = error.message || "Erro ao encerrar campanha.";
+      }
+    }
 
     function exportarCSV(lista) {
       if (!lista.length) {
@@ -1255,6 +1293,7 @@
             <button class="btn btn-secondary activateCampaignBtn" data-id="${campanha.id}">
               ${campanha.ativa ? "Ativa" : "Ativar"}
             </button>
+            ${campanha.ativa ? `<button class="btn btn-danger closeCampaignBtn" data-id="${campanha.id}">Encerrar</button>` : ""}
           </div>
         `;
 
@@ -1267,6 +1306,42 @@
           await ativarCampanha(id);
         });
       });
+
+      document.querySelectorAll(".closeCampaignBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          await encerrarCampanha(id);
+        });
+      });
+    }
+
+    function renderHistoricoCampanhas() {
+      historicoCampanhas.innerHTML = "";
+
+      if (!todasCampanhas.length) {
+        historicoCampanhas.innerHTML = `<div class="campaign-meta">Nenhuma campanha cadastrada.</div>`;
+        return;
+      }
+
+      for (const campanha of todasCampanhas) {
+        const totalLeads = todosLeads.filter(lead => lead.campanha_id === campanha.id).length;
+        const item = document.createElement("div");
+        item.className = "campaign-item";
+
+        item.innerHTML = `
+          <div>
+            <div class="campaign-name">${campanha.nome}</div>
+            <div class="campaign-meta">
+              ${campanha.ativa ? "Campanha ativa no momento" : "Campanha encerrada"} · ${totalLeads} lead(s)
+            </div>
+          </div>
+          <div>
+            ${campanha.ativa ? `<span class="campaign-active">● Ativa</span>` : `<span class="history-badge">Histórico</span>`}
+          </div>
+        `;
+
+        historicoCampanhas.appendChild(item);
+      }
     }
 
     function renderTabela(lista) {
@@ -1477,11 +1552,12 @@
       try {
         await carregarCampanhas();
         await carregarLeads();
+        renderHistoricoCampanhas();
         aplicarFiltro();
         statusMsg.textContent = `${todosLeads.length} lead(s) carregado(s).`;
       } catch (error) {
         console.error(error);
-        statusMsg.textContent = "Erro ao carregar dados.";
+        statusMsg.textContent = error.message || "Erro ao carregar dados.";
       }
     }
 
