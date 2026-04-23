@@ -713,39 +713,110 @@
       font-size:.92rem;
     }
 
+    .campaign-manager-card{
+      background:#081524;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .campaign-manager-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .campaign-section-title{
+      font-size:1rem;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .campaign-section-subtitle{
+      font-size:.85rem;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
     .campaign-manager{
       display:grid;
       gap:10px;
       margin-top:10px;
     }
 
+    .campaign-manager input,
+    .campaign-manager textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#0b192b;
+      color:#fff;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:.94rem;
+      font-family:inherit;
+      outline:none;
+    }
+
+    .campaign-manager textarea{
+      min-height:82px;
+      resize:vertical;
+    }
+
+    .campaign-manager input:focus,
+    .campaign-manager textarea:focus{
+      border-color:#2b9cff;
+      box-shadow:0 0 0 4px rgba(30,144,255,.12);
+    }
+
+    .campaign-actions-bar{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
     .campaign-list{
       display:grid;
       gap:10px;
-      margin-top:10px;
+      margin-top:6px;
     }
 
     .campaign-item{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:12px;
+      gap:14px;
       flex-wrap:wrap;
-      padding:12px;
-      border-radius:14px;
-      background:#081524;
-      border:1px solid var(--line);
+      padding:14px;
+      border-radius:16px;
+      background:#0b192b;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .campaign-item-left{
+      flex:1 1 260px;
     }
 
     .campaign-name{
       font-weight:700;
       color:#fff;
+      font-size:.96rem;
     }
 
     .campaign-meta{
-      font-size:.86rem;
+      font-size:.84rem;
       color:var(--muted);
       margin-top:4px;
+      line-height:1.5;
+    }
+
+    .campaign-item-right{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
     }
 
     .campaign-active{
@@ -759,6 +830,12 @@
       color:#6cf2b8;
       background:rgba(22,199,132,.12);
       border:1px solid rgba(22,199,132,.22);
+    }
+
+    .campaign-item .btn{
+      min-width:92px;
+      padding:10px 14px;
+      border-radius:12px;
     }
 
     .empty{
@@ -1018,17 +1095,50 @@
 
         <div class="insight">
           <h4>Gerenciar Campanhas</h4>
-          <div class="campaign-manager">
-            <input type="text" id="novaCampanhaNome" placeholder="Nome da nova campanha">
-            <textarea id="novaCampanhaDescricao" placeholder="Descrição da campanha (opcional)"></textarea>
-            <button class="btn btn-primary" id="createCampaignBtn">Criar campanha</button>
+
+          <div class="campaign-manager-card">
+            <div class="campaign-manager-header">
+              <div>
+                <div class="campaign-section-title">Nova campanha</div>
+                <div class="campaign-section-subtitle">Crie e organize suas feiras sem usar SQL.</div>
+              </div>
+            </div>
+
+            <div class="campaign-manager">
+              <input type="text" id="novaCampanhaNome" placeholder="Ex: Feira Agro 2026">
+              <textarea id="novaCampanhaDescricao" placeholder="Descrição da campanha (opcional)"></textarea>
+
+              <div class="campaign-actions-bar">
+                <button class="btn btn-primary" id="createCampaignBtn">Criar campanha</button>
+              </div>
+            </div>
           </div>
-          <div class="campaign-list" id="listaCampanhas"></div>
+
+          <div class="campaign-manager-card" style="margin-top:14px;">
+            <div class="campaign-manager-header">
+              <div>
+                <div class="campaign-section-title">Campanhas cadastradas</div>
+                <div class="campaign-section-subtitle">Ative uma campanha para receber novos leads automaticamente.</div>
+              </div>
+            </div>
+
+            <div class="campaign-list" id="listaCampanhas"></div>
+          </div>
         </div>
 
         <div class="insight">
           <h4>Histórico de Campanhas</h4>
-          <div id="historicoCampanhas" class="campaign-list"></div>
+
+          <div class="campaign-manager-card">
+            <div class="campaign-manager-header">
+              <div>
+                <div class="campaign-section-title">Histórico</div>
+                <div class="campaign-section-subtitle">Visualize campanhas antigas e quantidade de leads.</div>
+              </div>
+            </div>
+
+            <div id="historicoCampanhas" class="campaign-list"></div>
+          </div>
         </div>
       </section>
     </main>
@@ -1282,13 +1392,14 @@
         div.className = "campaign-item";
 
         div.innerHTML = `
-          <div>
+          <div class="campaign-item-left">
             <div class="campaign-name">${campanha.nome}</div>
             <div class="campaign-meta">
               ${campanha.descricao ? campanha.descricao : "Sem descrição"}
             </div>
           </div>
-          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+
+          <div class="campaign-item-right">
             ${campanha.ativa ? `<span class="campaign-active">● Ativa</span>` : ""}
             <button class="btn btn-secondary activateCampaignBtn" data-id="${campanha.id}">
               ${campanha.ativa ? "Ativa" : "Ativar"}
@@ -1329,14 +1440,17 @@
         item.className = "campaign-item";
 
         item.innerHTML = `
-          <div>
+          <div class="campaign-item-left">
             <div class="campaign-name">${campanha.nome}</div>
             <div class="campaign-meta">
               ${campanha.ativa ? "Campanha ativa no momento" : "Campanha encerrada"} · ${totalLeads} lead(s)
             </div>
           </div>
-          <div>
-            ${campanha.ativa ? `<span class="campaign-active">● Ativa</span>` : `<span class="history-badge">Histórico</span>`}
+
+          <div class="campaign-item-right">
+            ${campanha.ativa
+              ? `<span class="campaign-active">● Ativa</span>`
+              : `<span class="history-badge">Histórico</span>`}
           </div>
         `;
 
